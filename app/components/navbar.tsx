@@ -38,7 +38,7 @@ export default function Navbar() {
             <Link href="/exercises/completeMeasure" className="hover:underline">
               Complete the Measure
             </Link>
-            <Link href="/exercies/typeRhythm" className="hover:underline">
+            <Link href="/exercises/typeRhythm" className="hover:underline">
               Type that Rhythm
             </Link>
           </section>
