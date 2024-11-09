@@ -20,7 +20,7 @@ export default function Navbar() {
                     <Link href="/about" className="text-lg font-semibold hover:underline">
                         About
                     </Link>
-                    <Link href="/" className="text-lg font-semibold hover:underline">
+                    <Link href="/learningPages" className="text-lg font-semibold hover:underline">
                         Learning Pages
                     </Link>
                 </div>
@@ -29,16 +29,16 @@ export default function Navbar() {
         <div className="w-full flex justify-center items-center bg-indigo-300 md:px-8 py-2">
           {/* Links to Exercises */}
           <section className="flex justify-center space-x-8 text-lg font-medium">
-            <Link href="/" className="hover:underline">
+            <Link href="/exercises/noteAddition" className="hover:underline">
               Note Addition
             </Link>
-            <Link href="/" className="hover:underline">
+            <Link href="/exercises/notationIdentification" className="hover:underline">
               Notation Identification
             </Link>
-            <Link href="/" className="hover:underline">
+            <Link href="/exercises/completeMeasure" className="hover:underline">
               Complete the Measure
             </Link>
-            <Link href="/" className="hover:underline">
+            <Link href="/exercies/typeRhythm" className="hover:underline">
               Type that Rhythm
             </Link>
           </section>
