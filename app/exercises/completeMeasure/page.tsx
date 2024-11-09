@@ -3,8 +3,14 @@
 
 export default function completeMeasure() {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-          <p>Note Addition</p>
+      <main className="flex min-h-screen flex-col items-center pt-24">
+         <h1 className="text-3xl font-semibold mb-5">Complete the Measure</h1>
+         <p className="w-1/2 text-center">Given the following <b>incomplete</b> measure, select the note length 
+         that should replace the question mark to complete the measure.
+         </p>
+         
+         <p> TODO - Load image from BE</p>
+         <p>TODO - Create Button components</p>
       </main>
     )
   }
