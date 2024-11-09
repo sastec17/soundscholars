@@ -1,5 +1,6 @@
 /* completeMeasure component
 */
+import MultipleChoice from "@/app/components/multipleChoice"
 
 export default function completeMeasure() {
     return (
@@ -10,7 +11,7 @@ export default function completeMeasure() {
          </p>
          
          <p> TODO - Load image from BE</p>
-         <p>TODO - Create Button components</p>
+         <MultipleChoice></MultipleChoice>
       </main>
     )
   }
