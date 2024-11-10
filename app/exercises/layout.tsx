@@ -1,13 +1,6 @@
 import '/Users/sarahstec/Downloads/AIED/soundscholars/app/globals.css'
-import { Inter } from 'next/font/google'
 import Navbar from '../components/navbar'
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-  title: 'SoundScholars',
-  description: 'Learn musical rhythms',
-}
 
 export default function ExerciseLayout({
   children,

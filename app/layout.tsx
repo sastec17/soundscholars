@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} max-w-full`}>
+      <body className={`${inter.className} max-w-full font-mono`}>
         <div className="flex flex-col overflow-x-clip">
           <main className="flex flex-grow flex-col">{children}</main>
         </div>
