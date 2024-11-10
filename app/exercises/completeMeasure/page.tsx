@@ -13,6 +13,7 @@ export default function completeMeasure() {
          <p className="w-1/2 text-center">Given the following <b>incomplete</b> measure, select the note length 
          that should replace the question mark to complete the measure.
          </p>
+         <p>Top image from BE API call! Lower 4 need styling</p>
          <MultipleChoice url="/api/completeTheMeasure"></MultipleChoice>
       </main>
     )
