@@ -1,4 +1,9 @@
 
 export default function LearningPages() {
-    return(<p>learning pages</p>)
+    return(
+        <main className="flex min-h-screen flex-col items-center pt-24">
+        <h1 className="text-3xl font-semibold mb-5">Learning Pages</h1>
+        <p>TODO - Insert links to each learning page by level - Thinking like the 485 website lol</p>
+     </main>
+    )
 }
