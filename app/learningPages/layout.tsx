@@ -21,6 +21,9 @@ export default function LearningLayout({
                         <Link href="/about" className="text-lg font-semibold hover:underline">
                             About
                         </Link>
+                        <Link href="/exercises" className="text-lg font-semibold hover:underline">
+                            Exercises
+                        </Link>
                         <Link href="/logout" className="text-lg font-semibold hover:underline">
                             Logout
                         </Link>
