@@ -15,6 +15,9 @@ def completeTheMeasure():
     # ELSE - If user gets wrong - Sep API call that feeds this info into OpenAI + requests hint
     return {"imgUrl":  "/app/images/half_note.png"}
 
+@app.route("/api/noteAddition")
+def noteAddition():
+    return {"imgUrl":  "/app/images/half_note.png"}
 
 @app.route("/api/getOpenAIFeedback")
 def getOpenAIFeedback():

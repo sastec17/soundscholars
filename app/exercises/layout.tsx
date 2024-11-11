@@ -1,4 +1,4 @@
-import '/Users/sarahstec/Downloads/AIED/soundscholars/app/globals.css'
+import '../globals.css'
 import Navbar from '../components/navbar'
 
 
