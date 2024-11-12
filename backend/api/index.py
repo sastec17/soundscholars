@@ -1,11 +1,11 @@
 from flask import Flask
-app = Flask(__name__)
+import backend
 
-@app.route("/api/python")
+@backend.app.route("/api/python")
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@app.route("/api/completeTheMeasure")
+@backend.app.route("/api/completeTheMeasure")
 def completeTheMeasure():
     # TODO - SET UP SQLITE DATABASE + PULL IMAGE WE HAVEN'T SEEN BEFORE
     # STORE ARRAY OF IMAGES SEEN BEFORE IN REQUEST.SESSION? AVOID REPEATS IF POSSIBLE?
@@ -13,13 +13,25 @@ def completeTheMeasure():
 
     # IF user gets answer correct, move onto next exercise + call this function again
     # ELSE - If user gets wrong - Sep API call that feeds this info into OpenAI + requests hint
-    return {"imgUrl":  "/app/images/half_note.png"}
+    # Get the current user as proof of concept
+    connection = backend.model.get_db()
+    users = connection.execute(
+        "SELECT * FROM users "
+        "WHERE username == ?",
+        ('student1',)
+    )
+    user = users.fetchall()
+    print(user)
+    
+    return {"imgUrl":  "/uploads/level0/level0_fourquarters.png",
+            "user": user}
 
-@app.route("/api/noteAddition")
+@backend.app.route("/api/noteAddition")
 def noteAddition():
     return {"imgUrl":  "/app/images/half_note.png"}
 
-@app.route("/api/getOpenAIFeedback")
+
+@backend.app.route("/api/getOpenAIFeedback")
 def getOpenAIFeedback():
     """Get feedback from openAI - See above"""
     return ""
