@@ -28,19 +28,24 @@ case $1 in
         echo "Error: database already exists"
         exit 1
     fi
-    mkdir -p var/uploads
+    mkdir -p public/uploads/level0
+    mkdir -p public/uploads/level1
     sqlite3 var/soundScholars.sqlite3 < sql/schema.sql
     sqlite3 var/soundScholars.sqlite3 < sql/data.sql
-    # cp sql/uploads/* var/uploads/
-    # echo "+ mkdir -p var/uploads"
+    cp sql/uploads/level0/* public/uploads/level0
+    cp sql/uploads/level1/* public/uploads/level1
+    
+    echo "+ mkdir -p public/uploads/level0"
+    echo "+ mkdir -p public/uploads/level1"
     echo "+ sqlite3 var/soundScholars.sqlite3 < sql/schema.sql"
     echo "+ sqlite3 var/soundScholars.sqlite3 < sql/data.sql"
-    # echo "+ cp sql/uploads/* var/uploads/"
+    echo "+ cp sql/uploads/level0/* public/uploads/level0/*"
+    echo "+ cp sql/uploads/level1/* public/uploads/level1/*"
     ;;
 
   "destroy")
-    rm -rf var/soundScholars.sqlite3 var/uploads
-    echo "+ rm -rf var/soundScholars.sqlite3 var/uploads"
+    rm -rf var/soundScholars.sqlite3 public/uploads
+    echo "+ rm -rf var/soundScholars.sqlite3 public/uploads"
     ;;
 
   "reset")
@@ -57,7 +62,7 @@ case $1 in
     echo "+ sqlite3 -batch -line var/soundScholars.sqlite3 'SELECT * FROM exercises'"
     sqlite3 -batch -line var/soundScholars.sqlite3 'SELECT * FROM exercises'
 
-    echo "+ sqlite3 -batch -line var/.sqlite3 'SELECT * FROM users'"
+    echo "+ sqlite3 -batch -line var/soundScholars.sqlite3 'SELECT * FROM users'"
     sqlite3 -batch -line var/soundScholars.sqlite3 'SELECT * FROM users'
     ;;
   *)

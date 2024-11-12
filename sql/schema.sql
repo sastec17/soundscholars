@@ -13,5 +13,5 @@ CREATE TABLE exercises(
     textDescription VARCHAR(255) NOT NULL,
     level INT NOT NULL,
     timeSignature VARCHAR(20),
-    concepts VARCHAR(255) NOT NULL,
+    concepts VARCHAR(255) NOT NULL
 );
