@@ -30,8 +30,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           // If ignoreStaleRequest was set to true, we want to ignore the results of the
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
-            console.log("returned data", data);
-            setImgUrl(data.imgUrl);
+            setImgUrl(data.exercisePath);
           }
         })
         .catch((error) => console.log(error));
@@ -45,17 +44,24 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     }, [url]);
 
     return(
-        <div>
+        <div className="flex flex-col items-center">
             {/** TODO: ONLY LOAD WHEN imgUrl is not "" */}
             {/** Exercise */}
-            <div  className="relative w-24 h-24">
+            {imgUrl &&
+              <div className="flex items-center justify-center relative w-48 h-24">
                 <Image 
-                    alt="half note" 
+                    alt="Exercise Image" 
                     src={imgUrl} 
                     fill 
                     className="object-contain"
                 />
-            </div>
+              </div>
+            }
+            {!imgUrl &&
+              <div className="flex items-center justify-center text-center">
+                <p>Loading image...</p>
+              </div>
+            }
             {/** Multiple-Choice Buttons */}
             <div className="flex justify-around m-10">
                 <button className="relative w-24 h-24">
