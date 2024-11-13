@@ -7,6 +7,8 @@ Invoked by:
 */
 import Image from "next/image"
 import { useEffect, useState } from "react";
+import Icon from '@mdi/react';
+import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth } from '@mdi/js';
 
 type MultipleChoiceProps = {url:string};
 
@@ -76,38 +78,34 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
             {/** Multiple-Choice Buttons */}
             <div className="flex justify-around m-10">
                 <button className="relative w-24 h-24">
-                    <Image 
-                            className="object-contain"
-                            alt="half note" 
-                            src="/app/images/half_note.png" 
-                            fill 
-                        />
+                <Icon path={mdiMusicNoteHalf}
+                  title="Half note"
+                  size={3}
+                  color="black"
+                />
                 </button>
                 <button className="relative w-24 h-24"
-                onClick={() => checkAnswer('quarter')}
+                onClick={() => checkAnswer('half')}
                 >
-                    <Image 
-                            className="object-contain"
-                            alt="half note" 
-                            src="/app/images/quarter_note.png" 
-                            fill 
-                        />
+                <Icon path={mdiMusicNoteQuarter}
+                  title="Quarter note"
+                  size={3}
+                  color="black"
+                />
                 </button>            
                 <button className="relative w-24 h-24">
-                    <Image 
-                            className="object-contain"
-                            alt="half note" 
-                            src="/app/images/half_note.png" 
-                            fill 
-                        />
+                  <Icon path={mdiMusicNoteEighth}
+                    title="Eigth note"
+                    size={3}
+                    color="black"
+                  />
                 </button>            
                 <button className="relative w-24 h-24">
-                    <Image 
-                            className="object-contain"
-                            alt="half note" 
-                            src="/app/images/half_note.png" 
-                            fill 
-                        />
+                  <Icon path={mdiMusicNoteSixteenth}
+                      title="Sixteenth note"
+                      size={3}
+                      color="black"
+                    />
                 </button>
             </div>
         </div>
