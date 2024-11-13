@@ -16,6 +16,8 @@ type MultipleChoiceProps = {url:string};
  */
 export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [imgUrl, setImgUrl] = useState("");
+    const [answer, setAnswer] = useState("");
+    const [aiFeedback, setaiFeedback] = useState("");
     // TODO: GET USEEFFECT TO TRIGGER WHEN USER GETS SOMETHING RIGHT
     useEffect(() => {
       // Declare a boolean flag that we can use to cancel the API request.
@@ -31,6 +33,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
             setImgUrl(data.exercisePath);
+            setAnswer(data.answer);
           }
         })
         .catch((error) => console.log(error));
@@ -43,6 +46,14 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
       };
     }, [url]);
 
+    function checkAnswer(studentAnswer: string) {
+      // TODO: IMPLEMENT LOGIC FOR ANSWER CORRECTION HERE
+
+      // if correct, trigger useEffect OR put useEffect contents in function
+      // and call function from within useEffect + call function here
+
+      // if incorrect, call BE to get error message
+    }
     return(
         <div className="flex flex-col items-center">
             {/** TODO: ONLY LOAD WHEN imgUrl is not "" */}
@@ -72,11 +83,13 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                             fill 
                         />
                 </button>
-                <button className="relative w-24 h-24">
+                <button className="relative w-24 h-24"
+                onClick={() => checkAnswer('quarter')}
+                >
                     <Image 
                             className="object-contain"
                             alt="half note" 
-                            src="/app/images/half_note.png" 
+                            src="/app/images/quarter_note.png" 
                             fill 
                         />
                 </button>            
