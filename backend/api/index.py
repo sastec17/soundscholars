@@ -23,7 +23,7 @@ def noteAddition():
 @backend.app.route("/api/getFeedback")
 def getOpenAIFeedback():
     """Get feedback from openAI - See above"""
-    # TODO: LOAD OPENAI INSTANCE AND MAKE REQUEST
+    # TODO: LOAD OPENAI INSTANCE AND MAKE REQUEST - initialize like it is a teacher
     data = Flask.request.get_json()
     studentAnswer = data.studentAnswer
     level = data.level,
@@ -31,5 +31,15 @@ def getOpenAIFeedback():
     exerciseType = data.exerciseType
 
     #TODO: STORE DESCRIPTION OF EACH LEVEL IN DATABASE + RETRIEVE HERE
+    """EXAMPLE PROMPT FORMAT TEMPLATE:
+    Insert description of exercise type
+    Insert description of actual exercise and student response
+
+    The student currently only knows <Level specific info that comes from DB>
+
+    Please provide a brief hint on how to solve this
     
+    """
+
+
     return {'feedback': 'try again!'}
