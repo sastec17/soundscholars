@@ -23,7 +23,7 @@ def noteAddition():
 @backend.app.route("/api/typeThatRhythm")
 def typeThatRhythm():
     # TODO: CHANGE TO COMPLETE TYPERHYTHM WHEN ADDED TO DB
-    exercises = getExercises('completeMeasure')
+    exercises = getExercises('typeRhythm')
     return exercises[0]
 
 @backend.app.route("/api/getFeedback")
