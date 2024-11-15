@@ -20,6 +20,12 @@ def noteAddition():
     return exercise
 
 
+@backend.app.route("/api/typeThatRhythm")
+def typeThatRhythm():
+    # TODO: CHANGE TO COMPLETE TYPERHYTHM WHEN ADDED TO DB
+    exercises = getExercises('completeMeasure')
+    return exercises[0]
+
 @backend.app.route("/api/getFeedback")
 def getOpenAIFeedback():
     """Get feedback from openAI - See above"""
