@@ -19,7 +19,10 @@ type MultipleChoiceProps = {url:string};
 export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [imgUrl, setImgUrl] = useState("");
     const [answer, setAnswer] = useState("");
+    const[level, setLevel] = useState(0);
     const [aiFeedback, setaiFeedback] = useState("");
+    const [exerciseDescription, setDescription] = useState("");
+    const [exerciseType, setExerciseType] = useState("");
     // TODO: GET USEEFFECT TO TRIGGER WHEN USER GETS SOMETHING RIGHT
     useEffect(() => {
       // Declare a boolean flag that we can use to cancel the API request.
@@ -36,12 +39,15 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           if (!ignoreStaleRequest) {
             setImgUrl(data.exercisePath);
             setAnswer(data.answer);
+            setLevel(data.level);
+            setDescription(data.textDescription);
+            setExerciseType(data.exerciseType);
           }
         })
         .catch((error) => console.log(error));
 
       return () => {
-        // This is a cleanup function that runs whenever the Post component
+        // This is a cleanup function that runs whenever the component
         // unmounts or re-renders. If a Post is about to unmount or re-render, we
         // should avoid updating state.
         ignoreStaleRequest = true;
@@ -49,12 +55,38 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     }, [url]);
 
     function checkAnswer(studentAnswer: string) {
-      // TODO: IMPLEMENT LOGIC FOR ANSWER CORRECTION HERE
-
-      // if correct, trigger useEffect OR put useEffect contents in function
-      // and call function from within useEffect + call function here
-
+      // TODO: IMPLEMENT LOGIC FOR CORRECT ANSWER HERE
+      if (studentAnswer == answer) {
+        console.log('well done!')
+      }
       // if incorrect, call BE to get error message
+      else {
+        let ignoreStaleRequest = false;
+        // prep info for prompt engineering
+        let body = { 
+          studentAnswer: studentAnswer,
+          level: level,
+          description: exerciseDescription,
+          exerciseType: exerciseType
+        }
+        fetch('/api/getFeedback', 
+          {
+            credentials: "same-origin",
+            body: JSON.stringify(body)
+          })
+          .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            return response.json();
+          }).then((data) => {
+            if (!ignoreStaleRequest) {
+              setaiFeedback(data.feedback);
+            }
+          })
+          .catch((error) => console.log(error));
+          return () => {
+            ignoreStaleRequest = true;
+          };
+      }
     }
     return(
         <div className="flex flex-col items-center">
@@ -75,17 +107,25 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                 <p>Loading image...</p>
               </div>
             }
+            {/** AI feedback */}
+            {aiFeedback &&
+              <div className="text-center">
+                <p>{aiFeedback}</p>
+              </div>
+            }
             {/** Multiple-Choice Buttons */}
-            <div className="flex justify-around m-10">
-                <button className="relative w-24 h-24">
+            <div className="flex justify-around my-10 space-x-8">
+                <button className="relative w-24 h-24 border-4 border-black rounded-full"
+                  onClick={() => checkAnswer('half')}
+                >
                 <Icon path={mdiMusicNoteHalf}
                   title="Half note"
                   size={3}
                   color="black"
                 />
                 </button>
-                <button className="relative w-24 h-24"
-                onClick={() => checkAnswer('half')}
+                <button className="relative w-24 h-24 border-4 border-black rounded-full"
+                  onClick={() => checkAnswer('quarter')}
                 >
                 <Icon path={mdiMusicNoteQuarter}
                   title="Quarter note"
@@ -93,14 +133,17 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                   color="black"
                 />
                 </button>            
-                <button className="relative w-24 h-24">
+                <button className="relative w-24 h-24 border-4 border-black rounded-full"
+                  onClick={() => checkAnswer('eighth')}>
                   <Icon path={mdiMusicNoteEighth}
                     title="Eigth note"
                     size={3}
                     color="black"
                   />
                 </button>            
-                <button className="relative w-24 h-24">
+                <button className="flex items-center relative w-24 h-24 border-4 border-black rounded-full"
+                  onClick={() => checkAnswer('sixteenth')}
+                >
                   <Icon path={mdiMusicNoteSixteenth}
                       title="Sixteenth note"
                       size={3}
