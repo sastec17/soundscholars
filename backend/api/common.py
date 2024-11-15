@@ -18,7 +18,7 @@ def getExercises(exerciseType):
     raw_exercises = connection.execute(
     "SELECT * FROM exercises "
     "WHERE level == ? "
-    "AND exerciseType == 'completeMeasure'",
-    (user_level, )
+    "AND exerciseType == ?",
+    (user_level, exerciseType)
     )
     return raw_exercises.fetchall()

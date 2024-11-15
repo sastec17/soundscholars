@@ -6,4 +6,5 @@ VALUES ('student0', 'student0', 0),
        ('student2', 'student2', 2);
 
 INSERT INTO exercises(exerciseType, exercisePath, textDescription, level, timeSignature, concepts, answer)
-VALUES ('completeMeasure', '/uploads/level0/level0_fourquarters.png', 'four quarter notes', 0, '4/4', 'quarter', 'quarter')
+VALUES ('completeMeasure', '/uploads/level0/cm_4quarters.png', '2 quarter notes, ?, quarter', 0, '4/4', 'quarter', 'quarter'),
+        ('typeRhythm', '/uploads/level0/tr_4quarters.png', '4 quarter notes', 0, '4/4', 'quarter', 'quarter');
