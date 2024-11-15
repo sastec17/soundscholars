@@ -8,7 +8,24 @@ def hello_world():
 
 @backend.app.route("/api/login")
 def login():
-    return {"loggedIn": True}
+    # TODO: add log in logic - check credentials against BE
+    data = Flask.request.get_json()
+    username = data.username
+    password = data.password
+    connection = backend.model.get_db()
+    users = connection.execute(
+        "SELECT * FROM users "
+        "WHERE username == ? "
+        "AND password == ?",
+        (username, password)
+    )
+    user = users.fetchall()
+    if len(user) == 0:
+        return {"loggedIn": True,
+                "username": user[0]['username'],
+                'level': user[0]['level']}
+    
+    return {"loggedIn": False}
 
 @backend.app.route("/api/completeTheMeasure")
 def completeTheMeasure():

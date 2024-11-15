@@ -18,7 +18,11 @@ export default function Login() {
              .then((data) => {
                 if (!ignoreStaleRequest) {
                     if (!data.loggedIn){
-
+                        alert("Incorrect username or password. Please try again.")
+                    }
+                    else {
+                        // TODO: SET COOKIE W/ USERNAME + LEVEL INFO
+                        // SET # CORRECTLY ANSWERED ALSO
                     }
                 }
               })
