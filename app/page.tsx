@@ -14,13 +14,18 @@ export default function Home() {
           <h1 className="flex items-center text-7xl font-bold justify-center m-4">SoundScholars</h1>
           <p className='text-4xl font-semibold'>A cognitive tutor to learn musical rhythms</p>
           <div className='flex justify-center m-10 space-x-6'>
-              <Link className='p-5 bg-violet-200 font-semibold rounded-lg'
+              <Link className='p-5 bg-indigo-300 font-semibold rounded-lg'
                 href='/exercises/noteAddition'>Exercises</Link>
-              <Link href='/learningPages' className='p-5 bg-violet-200 font-semibold rounded-lg'
+              <Link href='/learningPages' className='p-5 bg-indigo-300 font-semibold rounded-lg'
               >Tutorials</Link>
           </div>
+          <div className='flex justify-center m-5 space-x-6'>
+            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg'
+                href='/login'>Login</Link>
+            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg'
+              href='/signup'>Sign Up</Link>
+          </div>
         </div>
-
     </main>
   )
 }

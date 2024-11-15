@@ -6,6 +6,10 @@ from backend.api.common import getExercises
 def hello_world():
     return "<p>Hello, World!</p>"
 
+@backend.app.route("/api/login")
+def login():
+    return {"loggedIn": True}
+
 @backend.app.route("/api/completeTheMeasure")
 def completeTheMeasure():
     # IF user gets answer correct, move onto next exercise + call this function again
