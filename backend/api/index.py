@@ -20,7 +20,16 @@ def noteAddition():
     return exercise
 
 
-@backend.app.route("/api/getOpenAIFeedback")
+@backend.app.route("/api/getFeedback")
 def getOpenAIFeedback():
     """Get feedback from openAI - See above"""
-    return ""
+    # TODO: LOAD OPENAI INSTANCE AND MAKE REQUEST
+    data = Flask.request.get_json()
+    studentAnswer = data.studentAnswer
+    level = data.level,
+    description = data.exerciseDescription,
+    exerciseType = data.exerciseType
+
+    #TODO: STORE DESCRIPTION OF EACH LEVEL IN DATABASE + RETRIEVE HERE
+    
+    return {'feedback': 'try again!'}
