@@ -19,6 +19,12 @@ def noteAddition():
     exercise = {"exercisePath":"/uploads/level0/level0_fourquarters.png"}
     return exercise
 
+@backend.app.route("/api/noteIdentification")
+def noteIdentification():
+    exercises = getExercises('noteIdentification')
+    # TODO: make exercise selection random
+    return exercises[0]
+
 
 @backend.app.route("/api/typeThatRhythm")
 def typeThatRhythm():

@@ -8,7 +8,7 @@ export default function TypeRhythm() {
   const [rhythm, setRhythm] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [answer, setAnswer] = useState("");
-  const[level, setLevel] = useState(0);
+  const [level, setLevel] = useState(0);
   const [aiFeedback, setaiFeedback] = useState("");
   const [exerciseDescription, setDescription] = useState("");
 

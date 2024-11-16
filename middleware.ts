@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const protectedRoutes = ['/exercises/noteAddition', 
                         '/exercises/completeMeasure',
                         '/exercises/typeRhythm',
-                        '/exercises/notationIdentification']
+                        '/exercises/noteIdentification']
 const publicRoutes = ['/login', '/signup', '/']
  
 export default async function middleware(req: NextRequest) {

@@ -43,8 +43,8 @@ export default function Navbar() {
             <Link href="/exercises/noteAddition" className="hover:underline">
               Note Addition
             </Link>
-            <Link href="/exercises/notationIdentification" className="hover:underline">
-              Notation Identification
+            <Link href="/exercises/noteIdentification" className="hover:underline">
+              Note Identification
             </Link>
             <Link href="/exercises/completeMeasure" className="hover:underline">
               Complete the Measure

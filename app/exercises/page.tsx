@@ -38,8 +38,8 @@ export default function Exercises() {
                         </Link>
                     </div>
                     <div className='py-4 px-3 bg-indigo-300 rounded-md text-center'>
-                        <Link href='/exercises/notationIdentification'>
-                            <p className="font-semibold text-xl">Notation Identification</p>
+                        <Link href='/exercises/noteIdentification'>
+                            <p className="font-semibold text-xl">Note Identification</p>
                             <p className="text-md">Identify notes and rests</p>
                         </Link>
                     </div>
@@ -53,7 +53,7 @@ export default function Exercises() {
                         </Link>
                     </div>
                     <div className='py-4 px-3 bg-indigo-300 rounded-md text-center'>
-                        <Link href='/exercises/notationIdentification'>
+                        <Link href='/exercises/noteIdentification'>
                             <p className="font-semibold text-xl">Type that Rhythm</p>
                             <p className="text-md">Apply notation and time signature knowledge</p>
                         </Link>

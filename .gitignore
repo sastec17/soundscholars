@@ -35,3 +35,7 @@ env*
 *.tsbuildinfo
 next-env.d.ts
 __pycache__
+
+package-lock.json
+package.json
+yarn.lock

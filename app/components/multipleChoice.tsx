@@ -1,9 +1,6 @@
 /* multipleChoice.tsx
 
 Load multiple choice buttons and communicate with backend
-
-Invoked by:
-    - completeMeasure/page.tsx
 */
 import Image from "next/image"
 import { useEffect, useState } from "react";
@@ -18,6 +15,7 @@ type MultipleChoiceProps = {url:string};
  */
 export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [imgUrl, setImgUrl] = useState("");
+    const [imgIcon, setImgIcon] = useState("");
     const [answer, setAnswer] = useState("");
     const [level, setLevel] = useState(0);
     const [aiFeedback, setaiFeedback] = useState("");
@@ -38,7 +36,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
             console.log("setting exercise")
-            setImgUrl(data.exercisePath);
+             setImgUrl(data.exercisePath);
             setAnswer(data.answer);
             setLevel(data.level);
             setDescription(data.textDescription);
