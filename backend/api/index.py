@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, request
 import backend
 from backend.api.common import getExercises
 
@@ -6,12 +6,12 @@ from backend.api.common import getExercises
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@backend.app.route("/api/login")
+@backend.app.route("/api/login",  methods=['POST'])
 def login():
     # TODO: add log in logic - check credentials against BE
-    data = Flask.request.get_json()
-    username = data.username
-    password = data.password
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
     connection = backend.model.get_db()
     users = connection.execute(
         "SELECT * FROM users "
@@ -20,7 +20,7 @@ def login():
         (username, password)
     )
     user = users.fetchall()
-    if len(user) == 0:
+    if len(user) != 0:
         return {"loggedIn": True,
                 "username": user[0]['username'],
                 'level': user[0]['level']}
@@ -51,7 +51,7 @@ def typeThatRhythm():
 def getOpenAIFeedback():
     """Get feedback from openAI - See above"""
     # TODO: LOAD OPENAI INSTANCE AND MAKE REQUEST - initialize like it is a teacher
-    data = Flask.request.get_json()
+    data = request.get_json()
     studentAnswer = data.studentAnswer
     level = data.level,
     description = data.exerciseDescription,
