@@ -1,4 +1,4 @@
-// Welcome component. See Figma for design
+// Level00 page
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteWhole, mdiMusicRestHalf, mdiMusicRestQuarter, mdiMusicRestWhole } from "@mdi/js";
 import Icon from "@mdi/react";
 import Link from "next/link"
@@ -48,8 +48,8 @@ export default function Level00() {
                     </div>
                 </div>
             ))}
-            <Link href='/exercises/noteAddition' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                Exercises
+            <Link href='/learningPages/levels/level01/' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                Next Page
             </Link>
     
         </main>
