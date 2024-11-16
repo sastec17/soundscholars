@@ -5,9 +5,17 @@ TODO: Make navbar go away when viewing splash page - use separate layout/nest?
 
 Referenced in: layout.tsx
 */
+"use client"
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
+    function logout() {
+      Cookies.remove("username");
+      Cookies.remove("level");
+      window.location.href = '/';
+
+    }
     return (
       <nav className="sticky top-0 left-0 z-50 w-full text-black py-4">
         <div className="md:px-8">
@@ -23,6 +31,9 @@ export default function Navbar() {
                     <Link href="/learningPages" className="text-lg font-semibold hover:underline">
                         Learning Pages
                     </Link>
+                    <button onClick={()=>logout()} className="text-lg font-semibold hover:underline">
+                        Logout
+                    </button>
                 </div>
             </section>
         </div>
