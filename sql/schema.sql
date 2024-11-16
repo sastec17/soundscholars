@@ -4,6 +4,10 @@ CREATE TABLE users(
   username VARCHAR(20) NOT NULL,
   password VARCHAR(40) NOT NULL,
   level INT NOT NULL,
+  completeMeasure INT NOT NULL,
+  noteAddition INT NOT NULL,
+  noteIdentification INT NOT NULL,
+  typeRhythm INT NOT NULL,
   PRIMARY KEY(username)
 );
 

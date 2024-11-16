@@ -16,7 +16,7 @@ def login():
     )
     user = users.fetchall()
     if len(user) != 0:
-
+        session['username'] = username
         return {"loggedIn": True,
                 "username": user[0]['username'],
                 'level': user[0]['level']}
@@ -40,10 +40,11 @@ def signup():
     if len(user) == 0:
         # insert user into DB
         connection.execute(
-            "INSERT into users(username, password, level) "
-            "VALUES (?, ?, 0)",
+            "INSERT into users(username, password, level, completeMeasure, noteAddition, noteIdentification, typeRhythm) "
+            "VALUES (?, ?, 0, 0, 0, 0, 0)",
             (username, password)
         )
+        session['username'] = username
         return {"loggedIn": True,
                 "username": username,
                 'level': 0}

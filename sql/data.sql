@@ -1,9 +1,9 @@
 PRAGMA foreign_keys = ON;
 
-INSERT INTO users(username, password, level)
-VALUES ('student0', 'student0', 0),
-       ('student1', 'student1', 1),
-       ('student2', 'student2', 2);
+INSERT INTO users(username, password, level, completeMeasure, noteAddition, noteIdentification, typeRhythm)
+VALUES ('student0', 'student0', 0, 0, 0, 2, 1),
+       ('student1', 'student1', 1, 0, 1, 0, 0),
+       ('student2', 'student2', 2, 0, 0, 0, 0);
 
 INSERT INTO exercises(exerciseType, exercisePath, textDescription, level, timeSignature, concepts, answer)
 VALUES ('completeMeasure', '/uploads/level0/cm_4quarters.png', '2 quarter notes, ?, quarter', 0, '4/4', 'quarter', 'quarter'),
