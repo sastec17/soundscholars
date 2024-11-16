@@ -13,8 +13,32 @@ export default function SignUp() {
             alert('Password entries do not match. Please try again.');
             return;
         }
-        // TODO - ADD SIGNUP LOGIC HERE
-        //fetch('/signup')
+        fetch('/api/signup', {
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({username: username, password:password})
+            })
+            .then((response) => {
+                if (!response.ok) throw Error(response.statusText);
+                return response.json();
+             })
+             .then((data) => {
+                    if (!data.loggedIn){
+                        alert("Username already exists. Please try again.");
+                    }
+                    else {
+                        Cookies.set("username", data.username);
+                        Cookies.set("level", data.level);
+                        // SET # CORRECTLY ANSWERED ALSO
+                        // redirect to welcome page
+                        window.location.href = '/welcome';
+                    }
+                
+              })
+              .catch((error) => alert(error));
     }
 
     return (

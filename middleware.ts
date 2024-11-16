@@ -12,7 +12,7 @@ export default async function middleware(req: NextRequest) {
 
   // 2. Check if the current route is protected or public
   const path = req.nextUrl.pathname
-  const isProtectedRoute = protectedRoutes.includes(path)
+  // const isProtectedRoute = protectedRoutes.includes(path)
   const isPublicRoute = publicRoutes.includes(path)
  
   // 3. Get the username from the cookie
@@ -20,8 +20,8 @@ export default async function middleware(req: NextRequest) {
   console.log(`Middleware active: Path = ${path}, Username = ${username}`);
 
   // 4. Redirect to /login if the user is not authenticated
-  if (isProtectedRoute && (username==null || username==undefined)) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl))
+  if (!isPublicRoute && (username==null || username==undefined)) {
+    return NextResponse.redirect(new URL('/', req.nextUrl))
   }
  
   // 5. Redirect to /dashboard if the user is authenticated
