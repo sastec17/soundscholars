@@ -115,7 +115,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
             }
             {/** Multiple-Choice Buttons */}
             <div className="flex justify-around my-10 space-x-8">
-                <button className="relative w-24 h-24 border-4 border-black rounded-full"
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('half')}
                 >
                 <Icon path={mdiMusicNoteHalf}
@@ -124,7 +124,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                   color="black"
                 />
                 </button>
-                <button className="relative w-24 h-24 border-4 border-black rounded-full"
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('quarter')}
                 >
                 <Icon path={mdiMusicNoteQuarter}
@@ -133,7 +133,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                   color="black"
                 />
                 </button>            
-                <button className="relative w-24 h-24 border-4 border-black rounded-full"
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('eighth')}>
                   <Icon path={mdiMusicNoteEighth}
                     title="Eigth note"
@@ -141,7 +141,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                     color="black"
                   />
                 </button>            
-                <button className="flex items-center relative w-24 h-24 border-4 border-black rounded-full"
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('sixteenth')}
                 >
                   <Icon path={mdiMusicNoteSixteenth}

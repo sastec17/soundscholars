@@ -6,7 +6,7 @@ export default function Welcome() {
             <p>TODO: Implement welcome splash screen - See Figma :p</p>
 
             {/** TODO: Link to learning page 0 */}
-            <Link href='/learningPages/levels/level0' className="bg-indigo-300 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            <Link href='/learningPages/levels/level0' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Get Started
             </Link>
     
