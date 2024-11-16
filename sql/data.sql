@@ -1,7 +1,7 @@
 PRAGMA foreign_keys = ON;
 
 INSERT INTO users(username, password, level, completeMeasure, noteAddition, noteIdentification, typeRhythm)
-VALUES ('student0', 'student0', 0, 0, 0, 2, 1),
+VALUES ('student0', 'student0', 0, 2, 3, 3, 3),
        ('student1', 'student1', 1, 0, 1, 0, 0),
        ('student2', 'student2', 2, 0, 0, 0, 0);
 

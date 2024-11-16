@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react";
 import Icon from '@mdi/react';
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth } from '@mdi/js';
+import correctAnswer from "../common/levelNavigation";
 
 type MultipleChoiceProps = {url:string};
 
@@ -57,6 +58,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
       // TODO: IMPLEMENT LOGIC FOR CORRECT ANSWER HERE
       if (studentAnswer == answer) {
         setaiFeedback("")
+        correctAnswer(exerciseType)
         console.log('well done!')
       }
       // if incorrect, call BE to get error message
