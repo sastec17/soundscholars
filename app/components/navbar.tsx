@@ -37,7 +37,7 @@ export default function Navbar() {
                 </div>
             </section>
         </div>
-        <div className="w-full flex justify-center items-center bg-indigo-300 md:px-8 py-2">
+        <div className="w-full flex justify-center items-center bg-indigo-300 md:px-8 py-2 mt-2">
           {/* Links to Exercises */}
           <section className="flex justify-center space-x-12 text-lg font-medium">
             <Link href="/exercises/noteAddition" className="hover:underline">
