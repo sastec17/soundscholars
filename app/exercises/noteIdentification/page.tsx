@@ -21,7 +21,10 @@ export default function noteIdentification() {
   const [answer, setAnswer] = useState("");
   const [level, setLevel] = useState(0);
   const [aiFeedback, setaiFeedback] = useState("");
-  const [exerciseDescription, setDescription] = useState("");
+  const [exerciseDescription, setExerciseDescription] = useState("");
+  const [description, setDescription] = useState("");
+  const [timeSignature, setTimeSignature] = useState("")
+  const [prompt, setPrompt] = useState("");
 
   useEffect(() => {
     let ignoreStaleRequest = false;
@@ -33,13 +36,22 @@ export default function noteIdentification() {
       .then((data) => {
         
         if (!ignoreStaleRequest) {
+          const format = Math.floor(Math.random() * 2);
           const img = noteIdentificationMap.get(String(data.textDescription));
           if(img != null) {
             setIcon(img);
           }
           setAnswer(data.answer);
           setLevel(data.level);
-          setDescription(data.textDescription);
+          setExerciseDescription(data.textDescription);
+          if(format == 0) { 
+            setDescription("Given a note/rest identify the name of that note."); 
+            setPrompt("Note Name: ")
+          } else { 
+            setDescription("Given a note/rest and time signature, identify the length (how many beats it would occupy) of that note."); 
+            setTimeSignature("4/4");
+            setPrompt("# Beats:");
+          }
         }
       })
       .catch((error) => console.log(error));
@@ -53,9 +65,12 @@ export default function noteIdentification() {
 
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
-      <h1 className="text-3xl font-semibold mb-5">Note Identification</h1>
-      <p className="w-1/2 text-center">Given a note/rest identify the name of that note.</p>
-      <div>
+      <h1 className="text-3xl font-semibold mb-5">Note Identification</h1> 
+      <p className="w-1/2 text-center">{description}</p>
+      <div className='parent flex-parent'>
+        {timeSignature && 
+          timeSignature
+        }
         {icon && 
           <div className="flex items-center justify-center relative w-48 h-24">
             {icon && <Icon path={icon} title={exerciseDescription} size={3} color="black" /> }
@@ -70,7 +85,7 @@ export default function noteIdentification() {
 
       <form className="flex my-10 space-x-8">
         <div>
-          <label className="block text-gray-700 text-sm font-bold mb-2"> Note Name:</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">{prompt}</label>
           <input  
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="rhythm" type="text" placeholder=""
             onChange={(ev) => setResponse(ev.target.value)}
