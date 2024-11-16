@@ -1,5 +1,5 @@
 import Link from "next/link"
-export default function Level1() {
+export default function Level10() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <p>TODO: Implement level 1 stuff - See Figma :p</p>

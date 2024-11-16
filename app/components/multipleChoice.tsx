@@ -19,7 +19,7 @@ type MultipleChoiceProps = {url:string};
 export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [imgUrl, setImgUrl] = useState("");
     const [answer, setAnswer] = useState("");
-    const[level, setLevel] = useState(0);
+    const [level, setLevel] = useState(0);
     const [aiFeedback, setaiFeedback] = useState("");
     const [exerciseDescription, setDescription] = useState("");
     const [exerciseType, setExerciseType] = useState("");
@@ -37,6 +37,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           // If ignoreStaleRequest was set to true, we want to ignore the results of the
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
+            console.log("setting exercise")
             setImgUrl(data.exercisePath);
             setAnswer(data.answer);
             setLevel(data.level);

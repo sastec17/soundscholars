@@ -16,3 +16,9 @@ CREATE TABLE exercises(
     concepts VARCHAR(255) NOT NULL,
     answer VARCHAR(25) NOT NULL
 );
+
+CREATE TABLE learningPages(
+  level INT NOT NULL,
+  pageIndex INT NOT NULL,
+  title VARCHAR(50) NOT NULL
+);

@@ -1,6 +1,6 @@
 from flask import Flask, session, request
 import backend
-from backend.api.common import getExercises
+from backend.api.common import getExercises, getPages
 
 @backend.app.route("/api/python")
 def hello_world():
@@ -25,6 +25,11 @@ def typeThatRhythm():
     # TODO: CHANGE TO COMPLETE TYPERHYTHM WHEN ADDED TO DB
     exercises = getExercises('typeRhythm')
     return exercises[0]
+
+@backend.app.route("/api/getLearningPages")
+def getLearningPages():
+    learningPages = getPages()
+    return learningPages
 
 @backend.app.route("/api/getFeedback", methods=['POST'])
 def getOpenAIFeedback():

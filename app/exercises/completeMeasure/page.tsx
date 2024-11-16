@@ -3,8 +3,6 @@
 "use client";
 import MultipleChoice from "@/app/components/multipleChoice"
 
-
-
 export default function completeMeasure() {
 
     return (

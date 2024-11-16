@@ -21,3 +21,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.flex-parent {
+  display: flex;
+}
