@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="md:px-8">
             {/** Top NavBar */}
             <section className="flex justify-between items-center">
-                <Link href='/' className="text-xl font-bold">
+                <Link href='/exercises' className="text-xl font-bold">
                     SoundScholars
                 </Link>
                 <div className="space-x-8">

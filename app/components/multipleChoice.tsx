@@ -57,6 +57,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     function checkAnswer(studentAnswer: string) {
       // TODO: IMPLEMENT LOGIC FOR CORRECT ANSWER HERE
       if (studentAnswer == answer) {
+        setaiFeedback("")
         console.log('well done!')
       }
       // if incorrect, call BE to get error message
@@ -72,6 +73,10 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
         fetch('/api/getFeedback', 
           {
             credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "POST",
             body: JSON.stringify(body)
           })
           .then((response) => {

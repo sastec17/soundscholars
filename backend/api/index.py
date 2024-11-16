@@ -26,15 +26,15 @@ def typeThatRhythm():
     exercises = getExercises('typeRhythm')
     return exercises[0]
 
-@backend.app.route("/api/getFeedback")
+@backend.app.route("/api/getFeedback", methods=['POST'])
 def getOpenAIFeedback():
     """Get feedback from openAI - See above"""
     # TODO: LOAD OPENAI INSTANCE AND MAKE REQUEST - initialize like it is a teacher
     data = request.get_json()
-    studentAnswer = data.studentAnswer
-    level = data.level,
-    description = data.exerciseDescription,
-    exerciseType = data.exerciseType
+    studentAnswer = data['studentAnswer']
+    level = data['level'],
+    description = data['description'],
+    exerciseType = data['exerciseType']
 
     #TODO: STORE DESCRIPTION OF EACH LEVEL IN DATABASE + RETRIEVE HERE
     """EXAMPLE PROMPT FORMAT TEMPLATE:
