@@ -16,7 +16,7 @@ def login():
     )
     user = users.fetchall()
     if len(user) != 0:
-        session['username'] = username
+        # session['username'] = username
         return {"loggedIn": True,
                 "username": user[0]['username'],
                 'level': user[0]['level']}
@@ -44,7 +44,7 @@ def signup():
             "VALUES (?, ?, 0, 0, 0, 0, 0)",
             (username, password)
         )
-        session['username'] = username
+        # session['username'] = username
         return {"loggedIn": True,
                 "username": username,
                 'level': 0}

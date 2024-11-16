@@ -46,7 +46,7 @@ def correctResponse():
     THRESHOLD=3
     data = request.get_json()
     exerciseType = data['exerciseType']
-    user = session.get('username')
+    user = data['username']
 
     connection = backend.model.get_db()
     # update counter for user's given exercise
@@ -62,7 +62,8 @@ def correctResponse():
                 "WHERE username == ? ",
                 (user,)
             )
-    user = raw_user.fetchone()
+    user = raw_user.fetchall()
+    user = user[0]
     if user['completeMeasure'] >= THRESHOLD and user['level'] < 3:
         # update user's level and counters
         connection.execute(

@@ -9,7 +9,10 @@ export default function correctAnswer(exerciseType: string){
             "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify({exerciseType: exerciseType})
+        body: JSON.stringify({
+            exerciseType: exerciseType,
+            username: Cookies.get('username')
+        })
         }
     ).then((response) => {
         if (!response.ok) throw Error(response.statusText);
