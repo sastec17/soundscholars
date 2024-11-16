@@ -6,8 +6,15 @@ import Cookies from "js-cookie";
 export default function SignUp() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [retypePassword, setRetypePassword] = useState('');
     function attemptSignup() {
         // TODO: BE CALL TO LOG USER IN
+        if (password != retypePassword) {
+            alert('Password entries do not match. Please try again.');
+            return;
+        }
+        // TODO - ADD SIGNUP LOGIC HERE
+        //fetch('/signup')
     }
 
     return (
@@ -36,6 +43,17 @@ export default function SignUp() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="rhythm" type="password" placeholder="********"
                             onChange={(ev) => setPassword(ev.target.value)}
                             value={password} 
+                        ></input>
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 text-lg font-bold mb-2">
+                            Retype Password
+                        </label>
+                        <input  
+                            required
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="rhythm" type="password" placeholder="********"
+                            onChange={(ev) => setRetypePassword(ev.target.value)}
+                            value={retypePassword} 
                         ></input>
                     </div>
                     <div className='flex flex-col items-center space-y-2'>
