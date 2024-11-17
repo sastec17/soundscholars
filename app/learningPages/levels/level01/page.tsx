@@ -33,9 +33,14 @@ export default function Level01() {
             <p>Here’s why:</p>
             <p>The quarter note gets the beat, since “4” is the denominator of our time signature. Each time we see a quarter note, we increment our count. There are 4 quarter notes allowed in a measure, since “4” is the numerator of our time signature</p>
 
-            <Link href='/exercises' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                Exercises
-            </Link>
+            <div className="space-x-8">
+                <Link href='/learningPages/levels/level00' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Back
+                </Link>
+                <Link href='/exercises' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Exercises
+                </Link>
+            </div>
     
         </main>
       )
