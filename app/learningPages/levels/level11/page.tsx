@@ -5,12 +5,12 @@ export default function Level11() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <h1 className="text-3xl font-semibold mb-5">Level 1: 3/4 Time Signature</h1>
-            <p>A time signature indicates how we count rhythms in a measure. It’s given as a fraction, where the numerator signifies the number of beats or counts in a measure, while the denominator signifies which type of note gets the beat.</p>
+            <p><b>Recall: </b>A time signature indicates how we count rhythms in a measure. It’s given as a fraction, where the numerator signifies the number of beats or counts in a measure, while the denominator signifies which type of note gets the beat.</p>
             <div className="parent flex-parent">
                 <div className="flex items-center justify-center relative w-48 h-24">
                     <Image 
-                        alt="4-4 time signature" 
-                        src="/app/images/4-4time.png" 
+                        alt="3-4 time signature" 
+                        src="/app/images/3-4time.png" 
                         fill 
                         className="object-contain"
                     />
@@ -24,7 +24,7 @@ export default function Level11() {
             <div className="flex items-center justify-center relative w-48 h-24">
                     <Image 
                         alt="3-4 time signature" 
-                        src="/uploads/level0/tr_4quarters.png" 
+                        src="/uploads/level1/tr_qqq.png" 
                         fill 
                         className="object-contain"
                     />
