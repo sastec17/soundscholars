@@ -17,7 +17,6 @@ type MultipleChoiceProps = {url:string};
  */
 export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [imgUrl, setImgUrl] = useState("");
-    const [imgIcon, setImgIcon] = useState("");
     const [answer, setAnswer] = useState("");
     const [level, setLevel] = useState(0);
     const [aiFeedback, setaiFeedback] = useState("");
@@ -57,9 +56,6 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
         .catch((error) => console.log(error));
 
       return () => {
-        // This is a cleanup function that runs whenever the component
-        // unmounts or re-renders. If a Post is about to unmount or re-render, we
-        // should avoid updating state.
         ignoreStaleRequest = true;
       };
     }, [url, trigger]);
@@ -108,7 +104,6 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     }
     return(
         <div className="flex flex-col items-center">
-            {/** TODO: ONLY LOAD WHEN imgUrl is not "" */}
             {/** Exercise */}
             {imgUrl &&
               <div className="flex items-center justify-center relative w-48 h-24">
@@ -127,7 +122,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
             }
             {loading &&
               <div className="flex items-center justify-center text-center">
-                <p>Great work! Loading next image...</p>
+                <p>Great work! Loading next exercise...</p>
               </div>
             }
             {/** AI feedback */}

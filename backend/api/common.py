@@ -81,6 +81,7 @@ def correctResponse():
             )
     user = raw_user.fetchall()
     user = user[0]
+    # TODO: update so they must meet threshold for all exercise types
     if user['completeMeasure'] >= THRESHOLD and user['level'] < 3:
         # update user's level and counters
         connection.execute(

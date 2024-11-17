@@ -5,15 +5,20 @@
 import Icon from '@mdi/react';
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole } from '@mdi/js';
+import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole, mdiMusicRestQuarter, mdiMusicRestEighth, mdiMusicRestSixteenth } from '@mdi/js';
+import correctAnswer from '@/app/common/levelNavigation';
 
 const noteIdentificationMap = new Map<string, string>([
   ["quarter note", mdiMusicNoteQuarter],
-  ["quarter rest", mdiMusicRestHalf],
+  ["quarter rest", mdiMusicRestQuarter],
   ["half note", mdiMusicNoteHalf],
   ["half rest", mdiMusicRestHalf],
   ["whole note", mdiMusicNoteWhole],
-  ["whole rest", mdiMusicRestWhole]
+  ["whole rest", mdiMusicRestWhole],
+  ["eigth note", mdiMusicNoteEighth],
+  ["eight rest", mdiMusicRestEighth],
+  ["sixteenth note", mdiMusicNoteSixteenth],
+  ["sixteenth rest", mdiMusicRestSixteenth]
 ]);
 
 export default function noteIdentification() {
@@ -22,10 +27,14 @@ export default function noteIdentification() {
   const [answer, setAnswer] = useState("");
   const [level, setLevel] = useState(0);
   const [aiFeedback, setaiFeedback] = useState("");
+  const [exerciseType, setExerciseType] = useState("");
   const [exerciseDescription, setExerciseDescription] = useState("");
   const [description, setDescription] = useState("");
   const [timeSignature, setTimeSignature] = useState("")
   const [prompt, setPrompt] = useState("");
+  const [format, setFormat] = useState(-1);
+  const [trigger, setTrigger] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let ignoreStaleRequest = false;
@@ -53,13 +62,16 @@ export default function noteIdentification() {
           setAnswer(data.answer);
           setLevel(data.level);
           setExerciseDescription(data.textDescription);
+          setExerciseType(data.exerciseType);
           if(format == 0) { 
             setDescription("Given a note/rest identify the name of that note."); 
-            setPrompt("Note Name: ")
+            setPrompt("Symbol Name: ")
+            setFormat(0);
           } else { 
             setDescription("Given a note/rest and time signature, identify the length (how many beats it would occupy) of that note."); 
             setTimeSignature("4/4");
             setPrompt("# Beats:");
+            setFormat(1);
           }
         }
       })
@@ -70,7 +82,30 @@ export default function noteIdentification() {
         // should avoid updating state.
         ignoreStaleRequest = true;
       };
-  }, [])
+  }, [trigger])
+
+  function handleSubmit() {
+    console.log(format);
+    if((format == 0 && response == exerciseDescription) || (format == 1 && response == answer)) { // note name
+      console.log(response, exerciseDescription)
+      console.log("correct!")
+      setaiFeedback("");
+      setLoading(true);
+      setResponse("");
+      correctAnswer(exerciseType);
+      setTrigger((prev)=>prev+1);
+      setLoading(false);
+    } else {
+      let ignoreStaleRequest = false;
+      let body = {
+        studentAnswer: response,
+        level: level, 
+        description: exerciseDescription,
+        exerciseType: exerciseType
+      }
+      // TODO: add AI feedback
+    }
+  }
 
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
@@ -90,6 +125,11 @@ export default function noteIdentification() {
             <p>Loading image...</p>
           </div>
         }
+        {loading && 
+          <div className="flex items-center justify-center text-center">
+            <p>Great work! Loading next exercise...</p>
+          </div>
+        }
       </div>
 
       <form className="flex my-10 space-x-8">
@@ -101,7 +141,7 @@ export default function noteIdentification() {
             value={response} 
           />
         </div>
-        <button className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"> Submit </button>
+        <button onClick={() => handleSubmit()} className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"> Submit </button>
       </form>
     </main>
   )
