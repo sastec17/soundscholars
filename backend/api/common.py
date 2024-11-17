@@ -3,6 +3,32 @@ from flask import request
 import backend
 import backend.model
 
+THRESHOLD=4
+
+@backend.app.route("/api/getExerciseTypes", methods=['POST'])
+def getExerciseTypes():
+    """Extract which exercise types the user still needs to complete"""
+    connection = backend.model.get_db()
+    data = request.get_json()
+    username = data['username']
+    users = connection.execute(
+        "SELECT * FROM users "
+        "WHERE username == ? ",
+        (username,)
+    )
+    user = users.fetchone()
+    if not user:
+        raise ValueError(f"No user found with username: {username}")
+    
+    types = ['completeMeasure', 'noteAddition', 'noteIdentification', 'typeRhythm']
+    exercises = []
+    for type in types:
+        if user[type] < THRESHOLD: # TODO: check if threshold is higher than # of exercises
+            exercises.append(type)
+    
+    return exercises
+        
+
 def getExercises(exerciseType, username):
     """Extract exercises for current user w/exercise type"""
     connection = backend.model.get_db()
@@ -60,7 +86,6 @@ def correctResponse():
     """Update user's 'correct' counters in DB.
        Flag when user needs to increase level.
     """
-    THRESHOLD=4
     data = request.get_json()
     exerciseType = data['exerciseType']
     username = data['username']
@@ -76,10 +101,10 @@ def correctResponse():
     connection.commit()
     # check to see if user needs to migrate to different level
     raw_user = connection.execute(
-                "SELECT * FROM users "
-                "WHERE username == ? ",
-                (username,)
-            )
+        "SELECT * FROM users "
+        "WHERE username == ? ",
+        (username,)
+    )
     user = raw_user.fetchall()
     user = user[0]
     # TODO: update so they must meet threshold for all exercise types

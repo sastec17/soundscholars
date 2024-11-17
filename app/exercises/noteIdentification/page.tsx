@@ -28,13 +28,35 @@ export default function noteIdentification() {
   const [level, setLevel] = useState(0);
   const [aiFeedback, setaiFeedback] = useState("");
   const [exerciseType, setExerciseType] = useState("");
+  const [symbolName, setSymbolName] = useState("");
   const [exerciseDescription, setExerciseDescription] = useState("");
-  const [description, setDescription] = useState("");
   const [timeSignature, setTimeSignature] = useState("")
   const [prompt, setPrompt] = useState("");
   const [format, setFormat] = useState(-1);
   const [loading, setLoading] = useState(false);
 
+  function setNewQuestion(symbolName: string, answer: string, level: number) {
+    const format = Math.floor(Math.random() * 2);
+    const img = noteIdentificationMap.get(String(symbolName));
+    if(img != null) {
+      setIcon(img);
+    }
+    setAnswer(answer);
+    setLevel(level);
+    setSymbolName(symbolName);
+    setExerciseType('noteIdentification');
+    setResponse("");
+    if(format == 0) { 
+      setExerciseDescription("Given a note/rest identify the name of that note."); 
+      setPrompt("Symbol Name: ")
+      setFormat(0);
+    } else { 
+      setExerciseDescription("Given a note/rest and time signature, identify the length (how many beats it would occupy) of that note."); 
+      setTimeSignature("4/4");
+      setPrompt("# Beats:");
+      setFormat(1);
+    }
+  }
   useEffect(() => {
     let ignoreStaleRequest = false;
     fetch('/api/noteIdentification',{ 
@@ -53,25 +75,7 @@ export default function noteIdentification() {
       .then((data) => {
         
         if (!ignoreStaleRequest) {
-          const format = Math.floor(Math.random() * 2);
-          const img = noteIdentificationMap.get(String(data.textDescription));
-          if(img != null) {
-            setIcon(img);
-          }
-          setAnswer(data.answer);
-          setLevel(data.level);
-          setExerciseDescription(data.textDescription);
-          setExerciseType(data.exerciseType);
-          if(format == 0) { 
-            setDescription("Given a note/rest identify the name of that note."); 
-            setPrompt("Symbol Name: ")
-            setFormat(0);
-          } else { 
-            setDescription("Given a note/rest and time signature, identify the length (how many beats it would occupy) of that note."); 
-            setTimeSignature("4/4");
-            setPrompt("# Beats:");
-            setFormat(1);
-          }
+          setNewQuestion(data.textDescription, data.answer, data.level);
         }
       })
       .catch((error) => console.log(error));
@@ -85,40 +89,60 @@ export default function noteIdentification() {
 
   async function handleSubmit() {
     console.log(format);
-    if((format == 0 && response == exerciseDescription) || (format == 1 && response == answer)) { // note name
-      console.log(response, exerciseDescription)
+    let correct = format == 0 ? symbolName : answer;
+    if(response == correct) { // note name
+      console.log(response, symbolName)
       console.log("correct!")
       setaiFeedback("");
       setLoading(true);
-      setResponse("");
       let data = await correctAnswer(exerciseType);
       // only set modified vars
-      setAnswer(data.answer);          
-      setExerciseDescription(data.textDescription);
-      setLoading(false);
+      setNewQuestion(data.textDescription, data.answer, level);
     } else {
       let ignoreStaleRequest = false;
       let body = {
-        studentAnswer: response,
+        selectedAnswer: response,
+        correctAnswer: correct,
         level: level, 
-        description: exerciseDescription,
+        answerOptions: '',
         exerciseType: exerciseType
       }
-      // TODO: add AI feedback
+      setResponse("");
+      fetch('/api/getFeedback', 
+          {
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify(body)
+          })
+          .then((response) => {
+            if (!response.ok) throw Error(response.statusText);
+            return response.json();
+          }).then((data) => {
+            if (!ignoreStaleRequest) {
+              setaiFeedback(data.feedback);
+            }
+          })
+          .catch((error) => console.log(error));
+          return () => {
+            ignoreStaleRequest = true;
+          };
     }
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
       <h1 className="text-3xl font-semibold mb-5">Note Identification</h1> 
-      <p className="w-1/2 text-center">{description}</p>
+      <p className="w-1/2 text-center">{exerciseDescription}</p>
       <div className='parent flex-parent'>
         {timeSignature && 
           timeSignature
         }
         {icon && 
           <div className="flex items-center justify-center relative w-48 h-24">
-            {icon && <Icon path={icon} title={exerciseDescription} size={3} color="black" /> }
+            {icon && <Icon path={icon} size={3} color="black" /> }
           </div>
         }
         {!icon &&
@@ -126,13 +150,17 @@ export default function noteIdentification() {
             <p>Loading image...</p>
           </div>
         }
-        {loading && 
+        {/* {loading && 
           <div className="flex items-center justify-center text-center">
             <p>Great work! Loading next exercise...</p>
           </div>
-        }
+        } */}
       </div>
-
+      {aiFeedback &&
+        <div className="text-center">
+          <p>{aiFeedback}</p>
+        </div>
+      }
       <form className="flex my-10 space-x-8">
         <div>
           <label className="block text-gray-700 text-sm font-bold mb-2">{prompt}</label>

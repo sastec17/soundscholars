@@ -5,7 +5,7 @@ Load multiple choice buttons and communicate with backend
 import Image from "next/image"
 import { useEffect, useState } from "react";
 import Icon from '@mdi/react';
-import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth } from '@mdi/js';
+import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicNoteWhole } from '@mdi/js';
 import correctAnswer from "../common/levelNavigation";
 import Cookies from "js-cookie";
 
@@ -73,10 +73,21 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
       else {
         let ignoreStaleRequest = false;
         // prep info for prompt engineering
+        var answerOptions = ["half note", "quarter note"];
+        if(exerciseType == 'noteAddition'){  
+          answerOptions.push("whole note");
+          if(level > 0) { answerOptions.push('eigth note'); }
+        }
+        if(exerciseType == 'completeMeasure' && level > 0) { 
+          answerOptions.push("eigth note"); 
+          if(level > 1) { answerOptions.push('sixteenth note'); }
+        }
+        console.log(answerOptions);
         let body = { 
-          studentAnswer: studentAnswer,
+          selectedAnswer: studentAnswer,
+          correctAnswer: answer,
+          answerOptions: answerOptions,
           level: level,
-          description: exerciseDescription,
           exerciseType: exerciseType
         }
         fetch('/api/getFeedback', 
@@ -120,11 +131,11 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                 <p>Loading image...</p>
               </div>
             }
-            {loading &&
+            {/* {loading &&
               <div className="flex items-center justify-center text-center">
                 <p>Great work! Loading next exercise...</p>
               </div>
-            }
+            } */}
             {/** AI feedback */}
             {aiFeedback &&
               <div className="text-center">
@@ -133,6 +144,16 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
             }
             {/** Multiple-Choice Buttons */}
             <div className="flex justify-around my-10 space-x-8">
+                {exerciseType == "noteAddition" && 
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
+                  onClick={() => checkAnswer('whole')}
+                >
+                <Icon path={mdiMusicNoteWhole}
+                  title="Whole note"
+                  size={3}
+                  color="black"
+                />
+                </button>}
                 <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('half')}
                 >
@@ -151,15 +172,15 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                   color="black"
                 />
                 </button>            
-                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
+                {level > 0 && <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('eighth')}>
                   <Icon path={mdiMusicNoteEighth}
                     title="Eigth note"
                     size={3}
                     color="black"
                   />
-                </button>            
-                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
+                </button> }        
+                {exerciseType == "completeMeasure" && level > 1 && <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('sixteenth')}
                 >
                   <Icon path={mdiMusicNoteSixteenth}
@@ -167,7 +188,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                       size={3}
                       color="black"
                     />
-                </button>
+                </button> }
             </div>
         </div>
     )

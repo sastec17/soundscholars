@@ -1,7 +1,7 @@
 PRAGMA foreign_keys = ON;
 
 INSERT INTO users(username, password, level, completeMeasure, noteAddition, noteIdentification, typeRhythm)
-VALUES ('student0', 'student0', 0, 0, 0, 0, 3),
+VALUES ('student0', 'student0', 0, 0, 0, 0, 4),
        ('student1', 'student1', 1, 0, 1, 0, 0),
        ('student2', 'student2', 2, 0, 0, 0, 0);
 
@@ -17,6 +17,11 @@ VALUES
     ('completeMeasure', '/uploads/level1/cm_eepqee.png', 'eigth,eighth,?,quarter,eigth,eighth', 1, '4/4', 'quarter, eighth', 'quarter'),
     ('completeMeasure', '/uploads/level1/cm_qpq.png', 'quarter,?,quarter', 1, '3/4', 'quarter', 'quarter'),
     ('completeMeasure', '/uploads/level1/cm_pq.png', '?,quarter', 1, '3/4', 'quarter,half', 'half'),
+
+    ('noteAddition', '/uploads/level0/two_half.png', '2 half notes', 0, '', 'half, whole', 'whole'),
+    ('noteAddition', '/uploads/level0/two_quarter.png', '2 quarter notes', 0, '', 'quarter, half', 'half'),
+
+    ('noteAddition', '/uploads/level1/two_eigth.png', '2 eigth notes', 1, '', 'quarter, eigth', 'quarter'),
 
     ('noteIdentification', '', 'quarter note', 0, '4/4', 'quarter', '1'),
     ('noteIdentification', '', 'quarter rest', 0, '4/4', 'quarter', '1'),
