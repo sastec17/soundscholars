@@ -4,6 +4,7 @@
 "use client";
 import Icon from '@mdi/react';
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole } from '@mdi/js';
 
 const noteIdentificationMap = new Map<string, string>([
@@ -28,7 +29,15 @@ export default function noteIdentification() {
 
   useEffect(() => {
     let ignoreStaleRequest = false;
-    fetch('/api/noteIdentification',{ credentials: "same-origin" })
+    fetch('/api/noteIdentification',{ 
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            username: Cookies.get('username')
+      })})
       .then((response) => {
         if (!response.ok) throw Error(response.statusText);
         return response.json();

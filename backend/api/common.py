@@ -1,40 +1,45 @@
 """For common functions reused in /api/*"""
-from flask import session, request
+from flask import request
 import backend
 import backend.model
 
-def getLevel():
-    # get current user level - could also store in flask session when user logs in (can change after login is implemented)
-    username = session.get('username', 'student0')
+def getExercises(exerciseType, username):
+    """Extract exercises for current user w/exercise type"""
     connection = backend.model.get_db()
+    
     users = connection.execute(
         "SELECT * FROM users "
         "WHERE username == ? ",
         (username,)
     )
     user = users.fetchall()
-    user_level = user[0]['level']
-    return user_level
-
-def getExercises(exerciseType):
-    """Extract exercises for current user w/exercise type"""
-    connection = backend.model.get_db()
-    user_level = getLevel()
+    level = user[0]['level']
 
     raw_exercises = connection.execute(
-    "SELECT * FROM exercises "
-    "WHERE level == ? "
-    "AND exerciseType == ?",
-    (user_level, exerciseType)
+        "SELECT * FROM exercises "
+        "WHERE level == ? " 
+        "AND exerciseType == ? ",
+        (level, exerciseType,)
     )
     return raw_exercises.fetchall()
 
-def getPages():
+@backend.app.route("/api/getLearningPages", methods=['POST'])
+def getLearningPages():
     connection = backend.model.get_db()
-    level = getLevel()
+    data = request.get_json()
+    username = data['username']
+    
+    users = connection.execute(
+        "SELECT * FROM users "
+        "WHERE username == ? ",
+        (username,)
+    )
+    user = users.fetchall()
+    level = user[0]['level']
+
     learningPages = connection.execute(
-        "SELECT * FROM learningPages "
-        "WHERE level <= {}".format(level)
+        f"""SELECT * FROM learningPages 
+        WHERE level <= {level}"""
     )
     return learningPages.fetchall()
 

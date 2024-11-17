@@ -3,6 +3,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image"
+import Cookies from "js-cookie";
 
 export default function TypeRhythm() {
   const [rhythm, setRhythm] = useState("");
@@ -14,7 +15,15 @@ export default function TypeRhythm() {
 
   useEffect(() => {
     let ignoreStaleRequest = false;
-    fetch('/api/typeThatRhythm',{ credentials: "same-origin" })
+    fetch('/api/typeThatRhythm',{ 
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+          username: Cookies.get('username')
+      })})
       .then((response) => {
         if (!response.ok) throw Error(response.statusText);
         return response.json();
@@ -31,9 +40,6 @@ export default function TypeRhythm() {
       })
       .catch((error) => console.log(error));
       return () => {
-        // This is a cleanup function that runs whenever the component
-        // unmounts or re-renders. If a Post is about to unmount or re-render, we
-        // should avoid updating state.
         ignoreStaleRequest = true;
       };
   }, [])

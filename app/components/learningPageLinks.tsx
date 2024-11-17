@@ -1,13 +1,22 @@
 "use client"
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 export default function LearningPageLinks() {
 
     const [learningPages, setLearningPages] = useState([]);
 
     useEffect(() => {
-        fetch("/api/getLearningPages", { credentials: "same-origin" })
+        fetch("/api/getLearningPages", { credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                username: Cookies.get('username')
+            })
+        })
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
           return response.json();

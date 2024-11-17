@@ -1,17 +1,19 @@
 from flask import Flask, session, request
 import backend
-from backend.api.common import getExercises, getPages
+from backend.api.common import getExercises
 
 @backend.app.route("/api/python")
 def hello_world():
     return "<p>Hello, World!</p>"
 
-@backend.app.route("/api/completeTheMeasure")
+@backend.app.route("/api/completeTheMeasure", methods=['POST'])
 def completeTheMeasure():
     # IF user gets answer correct, move onto next exercise + call this function again
     # ELSE - If user gets wrong - Sep API call that feeds this info into OpenAI + requests hint
     # TODO: REVISIT LOGIC FOR getExercises
-    exercises = getExercises('completeMeasure')
+    data = request.get_json()
+    username = data['username']
+    exercises = getExercises('completeMeasure', username)
     return exercises[0]
 
 @backend.app.route("/api/noteAddition")
@@ -19,23 +21,21 @@ def noteAddition():
     exercise = {"exercisePath":"/uploads/level0/level0_fourquarters.png"}
     return exercise
 
-@backend.app.route("/api/noteIdentification")
+@backend.app.route("/api/noteIdentification", methods=['POST'])
 def noteIdentification():
-    exercises = getExercises('noteIdentification')
+    data = request.get_json()
+    username = data['username']
+    exercises = getExercises('noteIdentification', username)
     # TODO: make exercise selection random
     return exercises[0]
 
-
-@backend.app.route("/api/typeThatRhythm")
+@backend.app.route("/api/typeThatRhythm", methods=['POST'])
 def typeThatRhythm():
+    data = request.get_json()
+    username = data['username']
     # TODO: CHANGE TO COMPLETE TYPERHYTHM WHEN ADDED TO DB
-    exercises = getExercises('typeRhythm')
+    exercises = getExercises('typeRhythm', username)
     return exercises[0]
-
-@backend.app.route("/api/getLearningPages")
-def getLearningPages():
-    learningPages = getPages()
-    return learningPages
 
 @backend.app.route("/api/getFeedback", methods=['POST'])
 def getOpenAIFeedback():
