@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Icon from '@mdi/react';
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth } from '@mdi/js';
 import correctAnswer from "../common/levelNavigation";
+import Cookies from "js-cookie";
 
 type MultipleChoiceProps = {url:string};
 
@@ -27,7 +28,14 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
       // Declare a boolean flag that we can use to cancel the API request.
       let ignoreStaleRequest = false;
       // call BE to get next image
-      fetch(url, { credentials: "same-origin" })
+      fetch(url, { credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+            username: Cookies.get('username')
+        })})
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
           return response.json();

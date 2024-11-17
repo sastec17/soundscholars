@@ -51,7 +51,7 @@ def correctResponse():
     THRESHOLD=3
     data = request.get_json()
     exerciseType = data['exerciseType']
-    user = data['username']
+    username = data['username']
 
     connection = backend.model.get_db()
     # update counter for user's given exercise
@@ -60,12 +60,12 @@ def correctResponse():
         SET {exerciseType} = {exerciseType} + 1
         WHERE username = ?
     """
-    connection.execute(query, (user,))
+    connection.execute(query, (username,))
     # check to see if user needs to migrate to different level
     raw_user = connection.execute(
                 "SELECT * FROM users "
                 "WHERE username == ? ",
-                (user,)
+                (username,)
             )
     user = raw_user.fetchall()
     user = user[0]
@@ -79,7 +79,7 @@ def correctResponse():
             "noteIdentification = 0, "
             "typeRhythm = 0 "
             "WHERE username == ?",
-        (user,))
+        (username,))
         return {'increaseLevel': True,
                 'nextLevel': user['level']+1}
 
