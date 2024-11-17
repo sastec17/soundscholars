@@ -1,10 +1,7 @@
-// Welcome component. See Figma for design
-// import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteWhole, mdiMusicRestHalf, mdiMusicRestQuarter, mdiMusicRestWhole } from "@mdi/js";
-// import Icon from "@mdi/react";
+// 4/4 time signature learning page
 import Link from "next/link"
 import Image from "next/image";
 export default function Level01() {
-    const example_img = require("../../../../sql/uploads/level0/cm_4quarters.png");
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <h1 className="text-3xl font-semibold mb-5">Level 0: 4/4 Time Signature</h1>
