@@ -60,7 +60,7 @@ def correctResponse():
     """Update user's 'correct' counters in DB.
        Flag when user needs to increase level.
     """
-    THRESHOLD=3
+    THRESHOLD=4
     data = request.get_json()
     exerciseType = data['exerciseType']
     username = data['username']
@@ -73,6 +73,7 @@ def correctResponse():
         WHERE username = ?
     """
     connection.execute(query, (username,))
+    connection.commit()
     # check to see if user needs to migrate to different level
     raw_user = connection.execute(
                 "SELECT * FROM users "
@@ -82,7 +83,7 @@ def correctResponse():
     user = raw_user.fetchall()
     user = user[0]
     # TODO: update so they must meet threshold for all exercise types
-    if user['completeMeasure'] >= THRESHOLD and user['level'] < 3:
+    if user['completeMeasure'] >= THRESHOLD and user['level'] < 2:
         # update user's level and counters
         connection.execute(
             "UPDATE users "
@@ -97,4 +98,14 @@ def correctResponse():
                 'nextLevel': user['level']+1}
 
     # handle logic for when user gives correct response
-    return {'inreaseLevel':False}
+    raw_exercises = connection.execute(
+        "SELECT * FROM exercises "
+        "WHERE level == ? " 
+        "AND exerciseType == ? ",
+        (user['level'], exerciseType,)
+    )
+    exercises = raw_exercises.fetchall()
+    exercise_index = user[exerciseType] % len(exercises)
+    return {'inreaseLevel':False,
+            'nextExercise': exercises[exercise_index]
+            }
