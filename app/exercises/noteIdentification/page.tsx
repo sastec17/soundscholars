@@ -33,7 +33,6 @@ export default function noteIdentification() {
   const [timeSignature, setTimeSignature] = useState("")
   const [prompt, setPrompt] = useState("");
   const [format, setFormat] = useState(-1);
-  const [trigger, setTrigger] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -82,9 +81,9 @@ export default function noteIdentification() {
         // should avoid updating state.
         ignoreStaleRequest = true;
       };
-  }, [trigger])
+  }, [])
 
-  function handleSubmit() {
+  async function handleSubmit() {
     console.log(format);
     if((format == 0 && response == exerciseDescription) || (format == 1 && response == answer)) { // note name
       console.log(response, exerciseDescription)
@@ -92,8 +91,10 @@ export default function noteIdentification() {
       setaiFeedback("");
       setLoading(true);
       setResponse("");
-      correctAnswer(exerciseType);
-      setTrigger((prev)=>prev+1);
+      let data = await correctAnswer(exerciseType);
+      // only set modified vars
+      setAnswer(data.answer);          
+      setExerciseDescription(data.textDescription);
       setLoading(false);
     } else {
       let ignoreStaleRequest = false;

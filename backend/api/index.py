@@ -7,7 +7,8 @@ def completeTheMeasure():
     # TODO: REVISIT LOGIC FOR getExercises
     data = request.get_json()
     username = data['username']
-    return getExercises('completeMeasure', username)
+    info = getExercises('completeMeasure', username)
+    return info
 
 @backend.app.route("/api/noteAddition")
 def noteAddition():

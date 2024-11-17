@@ -22,7 +22,6 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [aiFeedback, setaiFeedback] = useState("");
     const [exerciseDescription, setDescription] = useState("");
     const [exerciseType, setExerciseType] = useState("");
-    const [trigger, setTrigger] = useState(0);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
       // Declare a boolean flag that we can use to cancel the API request.
@@ -46,7 +45,6 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           if (!ignoreStaleRequest) {
             console.log("setting exercise")
             setImgUrl(data.exercisePath);
-            console.log('exercise', data.exercisePath);
             setAnswer(data.answer);
             setLevel(data.level);
             setDescription(data.textDescription);
@@ -58,15 +56,17 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
       return () => {
         ignoreStaleRequest = true;
       };
-    }, [url, trigger]);
+    }, [url]);
 
-    function checkAnswer(studentAnswer: string) {
-      // TODO: IMPLEMENT LOGIC FOR CORRECT ANSWER HERE
+    async function checkAnswer(studentAnswer: string) {
       if (studentAnswer == answer) {
         setaiFeedback("");
         setLoading(true);
-        correctAnswer(exerciseType);
-        setTrigger((prev)=>prev+1);
+        let data = await correctAnswer(exerciseType);
+        // only update modified fields
+        setImgUrl(data.exercisePath);
+        setAnswer(data.answer);
+        setDescription(data.textDescription);
         setLoading(false);
       }
       // if incorrect, call BE to get error message

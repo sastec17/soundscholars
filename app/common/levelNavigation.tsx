@@ -1,30 +1,43 @@
 import Cookies from "js-cookie";
-// User correctly answers
-export default function correctAnswer(exerciseType: string){
+
+type correctAnserReturn = {
+    exercisePath: string;
+    answer: string;
+    textDescription: string;
+};
+
+export default async function correctAnswer(
+    exerciseType: string
+): Promise<correctAnserReturn> {
     // update counter in BE
     // TODO: ignoreStaleRequest stuff needed here? 
-    fetch('/api/correctResponse', {
+    const response = await fetch('/api/correctResponse', {
         credentials: "same-origin",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify({
             exerciseType: exerciseType,
-            username: Cookies.get('username')
-        })
-        }
-    ).then((response) => {
-        if (!response.ok) throw Error(response.statusText);
-        return response.json();
-     }).then((data) => {
-        // TODO: update user's cookies if needed?
-        // increase user's level!
-        if (data.increaseLevel) {
-            Cookies.set('level', data.nextLevel);
-            // navigate to next page
-            // TODO: Cleaner way to do this???
-            window.location.href = '/learningPages/levels/level'+data.nextLevel+'0'
-        }
-     })
+            username: Cookies.get('username'),
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    if (data.increaseLevel) {
+        Cookies.set('level', data.nextLevel);
+        // navigate to next page
+        window.location.href = '/learningPages/levels/level' + data.nextLevel + '0';
+        throw new Error("Navigation occurred, no return value possible."); // Prevent further execution
+    }
+    return {
+        exercisePath: data.nextExercise.exercisePath,
+        answer: data.nextExercise.answer,
+        textDescription: data.nextExercise.textDescription,
+    };
 }
