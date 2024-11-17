@@ -12,16 +12,28 @@ def getExercises(exerciseType, username):
         "WHERE username == ? ",
         (username,)
     )
-    user = users.fetchall()
-    level = user[0]['level']
+    user = users.fetchone()
+    if not user:
+        raise ValueError(f"No user found with username: {username}")
+    
+    level = user['level']
 
+    if exerciseType not in user.keys():
+        raise ValueError(f"Invalid exerciseType: {exerciseType}")
+    
     raw_exercises = connection.execute(
         "SELECT * FROM exercises "
         "WHERE level == ? " 
         "AND exerciseType == ? ",
         (level, exerciseType,)
     )
-    return raw_exercises.fetchall()
+    exercises = raw_exercises.fetchall()
+    # dynamically return one exercise
+    if not exercises:
+        raise ValueError(f"No exercises found for level {level} and type {exerciseType}")
+
+    exercise_index = user[exerciseType] % len(exercises)
+    return exercises[exercise_index]
 
 @backend.app.route("/api/getLearningPages", methods=['POST'])
 def getLearningPages():
