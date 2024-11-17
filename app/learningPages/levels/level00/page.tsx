@@ -37,8 +37,9 @@ export default function Level00() {
     ];
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <main className="flex min-h-screen flex-col items-center space-y-10  p-24">
             <h1 className="text-3xl font-semibold mb-5">Level 0: Quarter, Half & Whole Notes + Rests</h1>
+            <div>
             {rows.map((item) => (
                 <div className="parent flex-parent">
                     <Icon path={item["image"]} title="Half note" size={3} color="black" />
@@ -48,6 +49,7 @@ export default function Level00() {
                     </div>
                 </div>
             ))}
+            </div>
             <Link href='/learningPages/levels/level01/' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Next Page
             </Link>

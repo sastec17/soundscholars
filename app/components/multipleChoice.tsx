@@ -23,7 +23,8 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [aiFeedback, setaiFeedback] = useState("");
     const [exerciseDescription, setDescription] = useState("");
     const [exerciseType, setExerciseType] = useState("");
-    // TODO: GET USEEFFECT TO TRIGGER WHEN USER GETS SOMETHING RIGHT
+    const [trigger, setTrigger] = useState(0);
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
       // Declare a boolean flag that we can use to cancel the API request.
       let ignoreStaleRequest = false;
@@ -45,7 +46,8 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
             console.log("setting exercise")
-             setImgUrl(data.exercisePath);
+            setImgUrl(data.exercisePath);
+            console.log('exercise', data.exercisePath);
             setAnswer(data.answer);
             setLevel(data.level);
             setDescription(data.textDescription);
@@ -60,14 +62,16 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
         // should avoid updating state.
         ignoreStaleRequest = true;
       };
-    }, [url]);
+    }, [url, trigger]);
 
     function checkAnswer(studentAnswer: string) {
       // TODO: IMPLEMENT LOGIC FOR CORRECT ANSWER HERE
       if (studentAnswer == answer) {
-        setaiFeedback("")
-        correctAnswer(exerciseType)
-        console.log('well done!')
+        setaiFeedback("");
+        setLoading(true);
+        correctAnswer(exerciseType);
+        setTrigger((prev)=>prev+1);
+        setLoading(false);
       }
       // if incorrect, call BE to get error message
       else {
@@ -119,6 +123,11 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
             {!imgUrl &&
               <div className="flex items-center justify-center text-center">
                 <p>Loading image...</p>
+              </div>
+            }
+            {loading &&
+              <div className="flex items-center justify-center text-center">
+                <p>Great work! Loading next image...</p>
               </div>
             }
             {/** AI feedback */}
