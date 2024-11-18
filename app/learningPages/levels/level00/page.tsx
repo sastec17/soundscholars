@@ -27,7 +27,7 @@ export default function Level00() {
         {
             "image": mdiMusicNoteWhole,
             "name": "Whole Note",
-            "description": "This note lasts as long as four quarter notes or two half notes. In 4/4 time signature, it will take up the entire measure."
+            "description": "This note lasts as long as four quarter notes or two half notes. In 4/4 time signature, it takes up the entire measure."
         },
         {
             "image": mdiMusicRestWhole,

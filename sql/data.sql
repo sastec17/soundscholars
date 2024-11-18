@@ -93,4 +93,6 @@ INSERT INTO learningPages(level, pageIndex, title)
 VALUES (0, 0, 'Quarter, Half & Whole Notes + Rests'),
        (0, 1, '4/4 Time Signature'),
        (1, 0, 'Eighth Notes + Rests'),
-       (1, 1, '3/4 Time Signature');
+       (1, 1, '3/4 Time Signature'),
+       (2, 0, 'Dotted Notes and Rests'),
+       (2, 1, 'Tied Notes');
