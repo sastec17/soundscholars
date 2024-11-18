@@ -29,6 +29,13 @@ VALUES
     ('noteAddition', '/uploads/level0/two_quarter.png', '2 quarter notes', 0, '', 'quarter, half', 'half'),
 
     ('noteAddition', '/uploads/level1/two_eigth.png', '2 eigth notes', 1, '', 'quarter, eigth', 'quarter'),
+    -- ('noteAddition', '/uploads/level1/two_sixteenth.png', '2 sixteenth notes', 1, '', 'sixteenth, eigth', 'eigth'),
+
+    ('noteAddition', '/uploads/level2/add_dh_q.png', 'dotted half, quarter', 2, '4/4', 'dotted, half, quarter, whole', 'whole'),
+    ('noteAddition', '/uploads/level2/add_dq_dq.png', 'dotted quarter, dotted quarter', 2, '4/4', 'dotted, quarter, half', 'dotted half'),
+    ('noteAddition', '/uploads/level2/add_q_e.png', 'quarter, eigth', 2, '4/4', 'dotted, quarter, eigth', 'dotted quarter'),
+    ('noteAddition', '/uploads/level2/add_q_h.png', 'quarter, half', 2, '4/4', 'dotted, quarter, half', 'dotted half'),
+    ('noteAddition', '/uploads/level2/add_dq_e.png', 'dotted quarter, eigth', 2, '4/4', 'dotted, quarter, eigth', 'half'),
 
     ('noteIdentification', '', 'quarter note', 0, '4/4', 'quarter', '1'),
     ('noteIdentification', '', 'quarter rest', 0, '4/4', 'quarter', '1'),
@@ -39,8 +46,8 @@ VALUES
 
     ('noteIdentification', '', 'eigth note', 1, '4/4', 'eigth', '0.5'),
     ('noteIdentification', '', 'eigth rest', 1, '4/4', 'eigth', '0.5'),
-    ('noteIdentification', '', 'sixteenth note', 1, '4/4', 'eigth', '0.25'),
-    ('noteIdentification', '', 'sixteenth rest', 1, '4/4', 'eigth', '0.25'),
+    -- ('noteIdentification', '', 'sixteenth note', 1, '4/4', 'eigth', '0.25'),
+    -- ('noteIdentification', '', 'sixteenth rest', 1, '4/4', 'eigth', '0.25'),
 
     ('noteIdentification', '', 'quarter note', 1, '3/4', 'quarter', '1'),
     ('noteIdentification', '', 'quarter rest', 1, '3/4', 'quarter', '1'),
@@ -50,13 +57,24 @@ VALUES
     ('noteIdentification', '', 'whole rest', 1, '3/4', 'whole', '3'),
     ('noteIdentification', '', 'eigth note', 1, '3/4', 'eigth', '0.5'),
     ('noteIdentification', '', 'eigth rest', 1, '3/4', 'eigth', '0.5'),
-    ('noteIdentification', '', 'sixteenth note', 1, '3/4', 'eigth', '0.25'),
-    ('noteIdentification', '', 'sixteenth rest', 1, '3/4', 'eigth', '0.25'),
+    -- ('noteIdentification', '', 'sixteenth note', 1, '3/4', 'eigth', '0.25'),
+    -- ('noteIdentification', '', 'sixteenth rest', 1, '3/4', 'eigth', '0.25'),
+
+    ('noteIdentification', '', 'dotted half note', 2, '4/4', 'dotted, half', '3'),
+    ('noteIdentification', '', 'dotted quarter note', 2, '4/4', 'dotted, quarter', '1.5'),
+
+    ('noteIdentification', '/uploads/level2/id_q_q.png', 'tied quarter quarter', 2, '4/4', 'tied, quarter', '2'),
+    ('noteIdentification', '/uploads/level2/id_q_dh.png', 'tied quarter dotted half', 2, '4/4', 'tied, dotted, quarter, half', '4'),
+    ('noteIdentification', '/uploads/level2/id_q_h.png', 'tied quarter half', 2, '4/4', 'tied, quarter, half', '3'),
+    ('noteIdentification', '/uploads/level2/id_e_q.png', 'tied eigth quarter', 2, '4/4', 'tied, eigth, quarter', '1.5'),
+    ('noteIdentification', '/uploads/level2/id_h_h.png', 'tied half half', 2, '4/4', 'tied, half', '4'),
+    ('noteIdentification', '/uploads/level2/id_e_h.png', 'tied eigth half', 2, '4/4', 'tied, eigth, half', '2.5'),
+    ('noteIdentification', '/uploads/level2/id_e_e.png', 'tied eigth eigth', 2, '4/4', 'tied, eigth', '1'),
 
     ('typeRhythm', '/uploads/level0/tr_qqqq.png', '4 quarter notes', 0, '4/4', 'quarter', '1234'),
     ('typeRhythm', '/uploads/level0/tr_hqq.png', 'half, quarter quarter', 0, '4/4', 'quarter, half', '134'),
-    ('typeRhythm', '/uploads/level0/tr_hh.png', 'half, half', 0, '4/4', 'half, half', 'half'),
-    ('typeRhythm', '/uploads/level0/tr_qqq.png', '1 quarter, 1 quarter rest, 2 quarters', 0, '4/4', 'quarter', '13'),
+    ('typeRhythm', '/uploads/level0/tr_hh.png', 'half, half', 0, '4/4', 'half, half', '13'),
+    ('typeRhythm', '/uploads/level0/tr_qqq.png', '1 quarter, 1 quarter rest, 2 quarters', 0, '4/4', 'quarter', '134'),
     
     ('typeRhythm', '/uploads/level1/tr_eeeeh.png', 'eight,eighth,eighth,eighth,half', 1, '4/4', 'eighth, half', '1+2+3'),
     ('typeRhythm', '/uploads/level1/tr_eeqqee.png', 'eight,eighth,quarter,quarter,eighth,eighth', 1, '4/4', 'quarter, eighth', '1+234+'),

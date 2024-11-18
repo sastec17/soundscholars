@@ -5,7 +5,7 @@
 import Icon from '@mdi/react';
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole, mdiMusicRestQuarter, mdiMusicRestEighth, mdiMusicRestSixteenth } from '@mdi/js';
+import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole, mdiMusicRestQuarter, mdiMusicRestEighth, mdiMusicRestSixteenth, mdiMusicNoteHalfDotted, mdiMusicNoteQuarterDotted } from '@mdi/js';
 import correctAnswer from '@/app/common/levelNavigation';
 import ProgressBar from '@/app/components/progressBar';
 
@@ -18,12 +18,15 @@ const noteIdentificationMap = new Map<string, string>([
   ["whole rest", mdiMusicRestWhole],
   ["eigth note", mdiMusicNoteEighth],
   ["eigth rest", mdiMusicRestEighth],
-  ["sixteenth note", mdiMusicNoteSixteenth],
-  ["sixteenth rest", mdiMusicRestSixteenth]
+  ["dotted half note", mdiMusicNoteHalfDotted],
+  ["dotted quarter note", mdiMusicNoteQuarterDotted]
+  // ["sixteenth note", mdiMusicNoteSixteenth],
+  // ["sixteenth rest", mdiMusicRestSixteenth]
 ]);
 
 export default function noteIdentification() {
   const [icon, setIcon] = useState("");
+  const [img, setImg] = useState("");
   const [response, setResponse] = useState("");
   const [answer, setAnswer] = useState("");
   const [level, setLevel] = useState(0);
@@ -37,11 +40,16 @@ export default function noteIdentification() {
   const [progress, setProgress] = useState(0);
   const [threshold, setThreshold] = useState(0);
 
-  function setNewQuestion(symbolName: string, answer: string, level: number, timeSignature: string) {
-    const format = Math.floor(Math.random() * 2);
-    const img = noteIdentificationMap.get(String(symbolName));
-    if(img != null) {
-      setIcon(img);
+  function setNewQuestion(symbolName: string, answer: string, level: number, timeSignature: string, image: string) {
+    var format = Math.floor(Math.random() * 2);
+    if(image != "") { // dont show the "symbol name" version for more complex notes (only # beats)
+      format = 1;
+    }
+    const icon = noteIdentificationMap.get(String(symbolName));
+    if(icon != null) {
+      setIcon(icon);
+    } else {
+      setImg(image);
     }
     setAnswer(answer);
     setLevel(level);
@@ -80,7 +88,7 @@ export default function noteIdentification() {
           window.location.href = '/exercises';
         }
         if (!ignoreStaleRequest) {
-          setNewQuestion(data.exercise.textDescription, data.exercise.answer, data.exercise.level, data.exercise.timeSignature);
+          setNewQuestion(data.exercise.textDescription, data.exercise.answer, data.exercise.level, data.exercise.timeSignature, data.exercise.exercisePath);
           setProgress(data.exerciseProgress);
           setThreshold(data.threshold);
         }
@@ -98,7 +106,7 @@ export default function noteIdentification() {
       setaiFeedback("");
       let data = await correctAnswer(exerciseType);
       // only set modified vars
-      setNewQuestion(data.exercise.textDescription, data.exercise.answer, level, data.exercise.timeSignature);
+      setNewQuestion(data.exercise.textDescription, data.exercise.answer, level, data.exercise.timeSignature, data.exercise.exercisePath);
       setProgress(data.exerciseProgress);
     } else {
       let ignoreStaleRequest = false;
@@ -147,11 +155,20 @@ export default function noteIdentification() {
             {icon && <Icon path={icon} size={3} color="black" /> }
           </div>
         }
-        {!icon &&
+        {img &&
+          <div className="flex items-center justify-center relative w-48 h-24">
+            {img /* && <Image 
+              // alt="Exercise Image" 
+              // src={img} 
+              // className="object-contain"
+            /> */}
+          </div>
+        }
+        {/* {!icon &&
           <div className="flex items-center justify-center text-center">
             <p>Loading image...</p>
           </div>
-        }
+        } */}
       </div>
       {aiFeedback &&
         <div className="text-center w-2/3">

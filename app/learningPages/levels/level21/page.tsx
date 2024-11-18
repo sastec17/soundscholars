@@ -17,7 +17,7 @@ export default function Level11() {
             </div>
             <p>This shows a measure 2 quarter notes "tied" together.</p>
             <p>Audibly, this is equivalent to playing 1 half note.</p>
-            <p>The above measure would therefore be counted as "1 34", because we don't play a new pitch on beat 2.</p>
+            <p>The above measure would therefore be counted as "1 3", because we don't play a new pitch on beat 2.</p>
             <div className="space-x-8">
                 <Link href='/learningPages/levels/level20' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                     Back

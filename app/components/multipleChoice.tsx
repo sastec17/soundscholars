@@ -5,7 +5,7 @@ Load multiple choice buttons and communicate with backend
 import Image from "next/image"
 import { useEffect, useState } from "react";
 import Icon from '@mdi/react';
-import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicNoteWhole } from '@mdi/js';
+import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicNoteWhole, mdiMusicNoteHalfDotted, mdiMusicNoteQuarterDotted } from '@mdi/js';
 import correctAnswer from '@/app/common/levelNavigation';
 import ProgressBar from '@/app/components/progressBar';
 import Cookies from "js-cookie";
@@ -83,10 +83,14 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
         if(exerciseType == 'noteAddition'){  
           answerOptions.push("whole note");
           if(level > 0) { answerOptions.push('eigth note'); }
+          if(level > 1) { 
+            answerOptions.push('dotted half note'); 
+            answerOptions.push('dotted quarter note');
+          }
         }
         if(exerciseType == 'completeMeasure' && level > 0) { 
           answerOptions.push("eigth note"); 
-          if(level > 1) { answerOptions.push('sixteenth note'); }
+          // if(level > 1) { answerOptions.push('sixteenth note'); }
         }
         console.log(answerOptions);
         let body = { 
@@ -186,7 +190,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                     color="black"
                   />
                 </button> }        
-                {exerciseType == "completeMeasure" && level > 1 && <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
+                {/* {exerciseType == "completeMeasure" && level > 1 && <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('sixteenth')}
                 >
                   <Icon path={mdiMusicNoteSixteenth}
@@ -194,7 +198,27 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                       size={3}
                       color="black"
                     />
-                </button> }
+                </button> } */}
+                {exerciseType == "noteAddition" && level > 1 &&
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
+                  onClick={() => checkAnswer('dotted half')}
+                >
+                <Icon path={mdiMusicNoteHalfDotted}
+                  title="Dotted half note"
+                  size={3}
+                  color="black"
+                />
+                </button>}
+                {exerciseType == "noteAddition" && level > 1 &&
+                <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
+                  onClick={() => checkAnswer('dotted quarter')}
+                >
+                <Icon path={mdiMusicNoteQuarterDotted}
+                  title="Dotted quarter note"
+                  size={3}
+                  color="black"
+                />
+                </button>}
             </div>
             <ProgressBar progress={progress} threshold={threshold} />
         </div>

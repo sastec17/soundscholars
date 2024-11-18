@@ -5,20 +5,20 @@ import Link from "next/link"
 export default function Level20() {
     const rows = [
         {
-            "image": mdiMusicNoteQuarterDotted,
-            "name": "Dotted Quarter Note",
-            "description": "This is a dotted quarter note. It takes up one and a half beats in a 4/4 time signature."
-        },
-        {
             "image": mdiMusicNoteHalfDotted,
             "name": "Dotted Half Note",
             "description": "This note lasts as long as three quarter notes."
         },
         {
-            "image": mdiMusicNoteEighthDotted,
-            "name": "Dotted Eighth Note",
-            "description": "This note lasts as long as 1.5 eighth notes, or 0.75 quarter notes. We'll revisit this one later!"
+            "image": mdiMusicNoteQuarterDotted,
+            "name": "Dotted Quarter Note",
+            "description": "This is a dotted quarter note. It takes up one and a half beats in a 4/4 time signature."
         },
+        // {
+        //     "image": mdiMusicNoteEighthDotted,
+        //     "name": "Dotted Eighth Note",
+        //     "description": "This note lasts as long as 1.5 eighth notes, or 0.75 quarter notes. We'll revisit this one later!"
+        // },
         
     ];
 
