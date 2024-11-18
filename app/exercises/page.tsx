@@ -47,9 +47,9 @@ export default function Exercises() {
                         SoundScholars
                     </Link>
                     <div className="space-x-8">
-                        <Link href="/about" className="text-lg font-semibold hover:underline">
+                        {/* <Link href="/about" className="text-lg font-semibold hover:underline">
                             About
-                        </Link>
+                        </Link> */}
                         <Link href="/learningPages" className="text-lg font-semibold hover:underline">
                             Learning Pages
                         </Link>

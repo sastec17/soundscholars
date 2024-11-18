@@ -37,6 +37,10 @@ export default async function correctAnswer(
     console.log(data);
 
     if (data.increaseLevel) {
+        if(data.nextLevel == -1) {
+            window.location.href = '/congrats';
+            throw new Error("Navigation occurred, no return value possible.");
+        }
         Cookies.set('level', data.nextLevel);
         // navigate to next page
         window.location.href = '/learningPages/levels/level' + data.nextLevel + '0';
