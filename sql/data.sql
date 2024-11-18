@@ -18,6 +18,13 @@ VALUES
     ('completeMeasure', '/uploads/level1/cm_qpq.png', 'quarter,?,quarter', 1, '3/4', 'quarter', 'quarter'),
     ('completeMeasure', '/uploads/level1/cm_pq.png', '?,quarter', 1, '3/4', 'quarter,half', 'half'),
 
+    ('completeMeasure', '/uploads/level2/cm_dqep.png', 'dotted quarter, eighth, ?', 2, '4/4', 'dotted quarter,half', 'half'),
+    ('completeMeasure', '/uploads/level2/cm_eepqee.png', 'eighth,eighth, ? tied to quarter, eighth, eighth', 2, '4/4', 'eighth, quarter, tied notes', 'quarter'),
+    ('completeMeasure', '/uploads/level2/cm_pdh.png', '?, dotted half', 2, '4/4', 'quarter, dotted half', 'quarter'),
+    ('completeMeasure', '/uploads/level2/cm_pqq.png', '?, quarter tied to quarter', 2, '3/4', 'quarter, tied notes', 'quarter'),
+    ('completeMeasure', '/uploads/level2/cm_qeepe.png', 'quarter, eighth, eighth, ?, eighth', 2, '3/4', 'quarter, eighth', 'eighth'),
+    ('completeMeasure', '/uploads/level2/cm_qph.png', 'quarter tied to ?, half', 2, '4/4', 'quarter, half', 'quarter'),
+
     ('noteAddition', '/uploads/level0/two_half.png', '2 half notes', 0, '', 'half, whole', 'whole'),
     ('noteAddition', '/uploads/level0/two_quarter.png', '2 quarter notes', 0, '', 'quarter, half', 'half'),
 
@@ -55,7 +62,14 @@ VALUES
     ('typeRhythm', '/uploads/level1/tr_eeqqee.png', 'eight,eighth,quarter,quarter,eighth,eighth', 1, '4/4', 'quarter, eighth', '1+234+'),
     ('typeRhythm', '/uploads/level1/tr_qeeq.png', 'quarter,eighth,eighth,quarter', 1, '3/4', 'quarter, eighth', '12+3'),
     ('typeRhythm', '/uploads/level1/tr_qh.png', 'quarter,half', 1, '3/4', 'quarter, half', '12'),
-    ('typeRhythm', '/uploads/level1/tr_qqq.png', 'quarter, quarter, quarter', 1, '3/4', 'quarter', '123');
+    ('typeRhythm', '/uploads/level1/tr_qqq.png', 'quarter, quarter, quarter', 1, '3/4', 'quarter', '123'),
+
+    ('typeRhythm', '/uploads/level1/tr_dqeh.png', 'quarter, quarter, quarter', 2, '4/4', 'dotted quarter, eighth, half', '1+3'),
+    ('typeRhythm', '/uploads/level1/tr_eeqqee.png', 'eighth, eighth, quarter tied to quarter, eighth, eighth', 2, '4/4', 'quarter, eighth', '1+24+'),
+    ('typeRhythm', '/uploads/level1/tr_qdh.png', 'quarter tied to dotted half', 2, '4/4', 'quarter, dotted half', '12'),
+    ('typeRhythm', '/uploads/level1/tr_qeeq.png', 'quarter, eighth, eighth, quarter', 2, '3/4', 'quarter, eighth', '12+3'),    
+    ('typeRhythm', '/uploads/level1/tr_qqh.png', 'quarter tied to quarter, half', 2, '4/4', 'quarter, half, tied notes', '13'),    
+    ('typeRhythm', '/uploads/level1/tr_qqq.png', 'quarter, quarter tied to quarter', 2, '3/4', 'quarter, tied notes', '12');
 
 INSERT INTO learningPages(level, pageIndex, title)
 VALUES (0, 0, 'Quarter, Half & Whole Notes + Rests'),
