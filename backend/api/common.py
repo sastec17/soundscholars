@@ -108,11 +108,15 @@ def correctResponse():
     user = getUserFromDB(username)
     level = user['level']
 
-    update_level = level < 2    
+    update_level = True  
     for type in EXERCISE_TYPES:
         numExercisesInLevel = len(getExercisesFromDB(type, level))
         if user[type] < min(numExercisesInLevel, THRESHOLD):
             update_level = False
+            
+    if level == 2 and update_level:
+        return {'increaseLevel': True,
+                'nextLevel': -1}
     
     if update_level:
         # update user's level and counters
