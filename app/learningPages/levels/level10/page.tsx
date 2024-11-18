@@ -33,6 +33,7 @@ export default function Level01() {
             <div className="flex flex-col items-center">
                 <p><b>Important:</b> Two eighth notes stemmed together will look like this:</p>
                 <Icon path={mdiMusic} title="Two eighth notes" size={3} color="black"/>
+                <p>Verbally we would count the above as "1 and" in 4/4 time, but we would <b>write this as "1+"</b></p>
             </div>
             <Link href='/learningPages/levels/level11/' className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Next Page
