@@ -48,10 +48,10 @@ export default function noteIdentification() {
     }
     const icon = noteIdentificationMap.get(String(symbolName));
     if(icon != null) {
+      setImg("");
       setIcon(icon);
     } else {
-      console.log('image')
-      console.log(image)
+      setIcon("");
       setImg(image);
     }
     setAnswer(answer);
