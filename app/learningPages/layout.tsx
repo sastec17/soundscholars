@@ -1,13 +1,20 @@
 /**
  * layout for learning pages
  */
+"use client"
 import Link from "next/link"
+import Cookies from "js-cookie";
 
 export default function LearningLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    function logout() {
+        Cookies.remove("username");
+        Cookies.remove("level");
+        window.location.href = '/';
+      }
     return (
         <div>
             <nav className="sticky top-0 left-0 z-50 w-full text-black py-4">
@@ -24,9 +31,9 @@ export default function LearningLayout({
                         <Link href="/exercises" className="text-lg font-semibold hover:underline">
                             Exercises
                         </Link>
-                        <Link href="/logout" className="text-lg font-semibold hover:underline">
+                        <button onClick={()=>logout()} className="text-lg font-semibold hover:underline">
                             Logout
-                        </Link>
+                        </button>
                     </div>
                 </section>
             </div>
