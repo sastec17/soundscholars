@@ -142,7 +142,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
             } */}
             {/** AI feedback */}
             {aiFeedback &&
-              <div className="text-center">
+              <div className="text-center w-2/3">
                 <p>{aiFeedback}</p>
               </div>
             }
