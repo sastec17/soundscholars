@@ -157,7 +157,7 @@ export default function noteIdentification() {
         } */}
       </div>
       {aiFeedback &&
-        <div className="text-center">
+        <div className="text-center w-2/3">
           <p>{aiFeedback}</p>
         </div>
       }
