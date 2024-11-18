@@ -25,9 +25,9 @@ export default function LearningLayout({
                         SoundScholars
                     </Link>
                     <div className="space-x-8">
-                        <Link href="/about" className="text-lg font-semibold hover:underline">
+                        {/* <Link href="/about" className="text-lg font-semibold hover:underline">
                             About
-                        </Link>
+                        </Link> */}
                         <Link href="/exercises" className="text-lg font-semibold hover:underline">
                             Exercises
                         </Link>
