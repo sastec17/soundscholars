@@ -16,7 +16,7 @@ const noteIdentificationMap = new Map<string, string>([
   ["whole note", mdiMusicNoteWhole],
   ["whole rest", mdiMusicRestWhole],
   ["eigth note", mdiMusicNoteEighth],
-  ["eight rest", mdiMusicRestEighth],
+  ["eigth rest", mdiMusicRestEighth],
   ["sixteenth note", mdiMusicNoteSixteenth],
   ["sixteenth rest", mdiMusicRestSixteenth]
 ]);
@@ -73,7 +73,9 @@ export default function noteIdentification() {
         return response.json();
       })
       .then((data) => {
-        
+        if(JSON.stringify(data) === "{}") {
+          window.location.href = '/exercises';
+        }
         if (!ignoreStaleRequest) {
           setNewQuestion(data.textDescription, data.answer, data.level);
         }

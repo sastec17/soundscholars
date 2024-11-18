@@ -34,7 +34,6 @@ export default function Exercises() {
             setTypeRhythm(data.includes('typeRhythm'));
             setNoteIdentification(data.includes('noteIdentification'));
             setCompleteMeasure(data.includes('completeMeasure'));
-            console.log(data);
         })
     }, []);
 

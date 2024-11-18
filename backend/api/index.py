@@ -5,7 +5,6 @@ from openai import OpenAI
 
 @backend.app.route("/api/completeTheMeasure", methods=['POST'])
 def completeTheMeasure():
-    # TODO: REVISIT LOGIC FOR getExercises
     data = request.get_json()
     username = data['username']
     info = getExercises('completeMeasure', username)
@@ -41,7 +40,6 @@ def getOpenAIFeedback():
     exerciseType = data['exerciseType']
     
     # TODO use exercise level in prompt, what they've learned?
-
     exerciseDescription = ""
     if exerciseType == 'noteAddition':
         exerciseDescription = "This exercise gives a student two notes and asks them to identify the singular note that occupies the same number of beats."

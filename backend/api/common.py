@@ -3,50 +3,23 @@ from flask import request
 import backend
 import backend.model
 
-THRESHOLD=4
+THRESHOLD=3
+EXERCISE_TYPES = ['completeMeasure','noteAddition', 'noteIdentification', 'typeRhythm']
 
-@backend.app.route("/api/getExerciseTypes", methods=['POST'])
-def getExerciseTypes():
-    """Extract which exercise types the user still needs to complete"""
+def getUserFromDB(username):
     connection = backend.model.get_db()
-    data = request.get_json()
-    username = data['username']
-    users = connection.execute(
+    raw_users = connection.execute(
         "SELECT * FROM users "
         "WHERE username == ? ",
         (username,)
     )
-    user = users.fetchone()
+    user = raw_users.fetchone()
     if not user:
         raise ValueError(f"No user found with username: {username}")
-    
-    types = ['completeMeasure', 'noteAddition', 'noteIdentification', 'typeRhythm']
-    exercises = []
-    for type in types:
-        if user[type] < THRESHOLD: # TODO: check if threshold is higher than # of exercises
-            exercises.append(type)
-    
-    return exercises
-        
+    return user
 
-def getExercises(exerciseType, username):
-    """Extract exercises for current user w/exercise type"""
+def getExercisesFromDB(exerciseType, level):
     connection = backend.model.get_db()
-    
-    users = connection.execute(
-        "SELECT * FROM users "
-        "WHERE username == ? ",
-        (username,)
-    )
-    user = users.fetchone()
-    if not user:
-        raise ValueError(f"No user found with username: {username}")
-    
-    level = user['level']
-
-    if exerciseType not in user.keys():
-        raise ValueError(f"Invalid exerciseType: {exerciseType}")
-    
     raw_exercises = connection.execute(
         "SELECT * FROM exercises "
         "WHERE level == ? " 
@@ -54,11 +27,44 @@ def getExercises(exerciseType, username):
         (level, exerciseType,)
     )
     exercises = raw_exercises.fetchall()
-    # dynamically return one exercise
     if not exercises:
         raise ValueError(f"No exercises found for level {level} and type {exerciseType}")
+    return exercises
 
-    exercise_index = user[exerciseType] % len(exercises)
+@backend.app.route("/api/getExerciseTypes", methods=['POST'])
+def getExerciseTypes():
+    """Extract which exercise types the user still needs to complete"""
+    data = request.get_json()
+    username = data['username']
+
+    user = getUserFromDB(username)
+    level = user['level']
+    
+    exercises = []
+    for type in EXERCISE_TYPES:
+        numExercisesInLevel = len(getExercisesFromDB(type, level))
+        if user[type] < min(numExercisesInLevel, THRESHOLD):
+            exercises.append(type)
+    
+    return exercises
+        
+
+def getExercises(exerciseType, username):
+    """Extract exercises for current user w/exercise type"""
+    
+    user = getUserFromDB(username)
+    
+    level = user['level']
+
+    if exerciseType not in user.keys():
+        raise ValueError(f"Invalid exerciseType: {exerciseType}")
+    
+    exercises = getExercisesFromDB(exerciseType, level)    
+
+    exercise_index = user[exerciseType]
+    if exercise_index > len(exercises):
+        return {}
+    
     return exercises[exercise_index]
 
 @backend.app.route("/api/getLearningPages", methods=['POST'])
@@ -67,13 +73,8 @@ def getLearningPages():
     data = request.get_json()
     username = data['username']
     
-    users = connection.execute(
-        "SELECT * FROM users "
-        "WHERE username == ? ",
-        (username,)
-    )
-    user = users.fetchall()
-    level = user[0]['level']
+    user = getUserFromDB(username)
+    level = user['level']
 
     learningPages = connection.execute(
         f"""SELECT * FROM learningPages 
@@ -99,16 +100,17 @@ def correctResponse():
     """
     connection.execute(query, (username,))
     connection.commit()
-    # check to see if user needs to migrate to different level
-    raw_user = connection.execute(
-        "SELECT * FROM users "
-        "WHERE username == ? ",
-        (username,)
-    )
-    user = raw_user.fetchall()
-    user = user[0]
-    # TODO: update so they must meet threshold for all exercise types
-    if user['completeMeasure'] >= THRESHOLD and user['level'] < 2:
+    
+    user = getUserFromDB(username)
+    level = user['level']
+
+    updateLevel = level < 2    
+    for type in EXERCISE_TYPES:
+        numExercisesInLevel = len(getExercisesFromDB(type, level))
+        if user[type] < min(numExercisesInLevel, THRESHOLD):
+            updateLevel = False
+    
+    if updateLevel:
         # update user's level and counters
         connection.execute(
             "UPDATE users "
@@ -123,13 +125,7 @@ def correctResponse():
                 'nextLevel': user['level']+1}
 
     # handle logic for when user gives correct response
-    raw_exercises = connection.execute(
-        "SELECT * FROM exercises "
-        "WHERE level == ? " 
-        "AND exerciseType == ? ",
-        (user['level'], exerciseType,)
-    )
-    exercises = raw_exercises.fetchall()
+    exercises = getExercisesFromDB(exerciseType, level)
     exercise_index = user[exerciseType] % len(exercises)
     return {'inreaseLevel':False,
             'nextExercise': exercises[exercise_index]

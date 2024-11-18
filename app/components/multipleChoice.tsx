@@ -40,6 +40,10 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           return response.json();
         })
         .then((data) => {
+          console.log(data)
+          if(JSON.stringify(data) === "{}") {
+            window.location.href = '/exercises';
+          }
           // If ignoreStaleRequest was set to true, we want to ignore the results of the
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
