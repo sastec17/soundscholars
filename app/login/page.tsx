@@ -29,7 +29,7 @@ export default function Login() {
                         Cookies.set("level", data.level);
                         // SET # CORRECTLY ANSWERED ALSO
                         // redirect
-                        window.location.href = '/exercises/noteAddition';
+                        window.location.href = '/exercises';
                     }
                 
               })

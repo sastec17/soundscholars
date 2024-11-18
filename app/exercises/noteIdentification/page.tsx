@@ -3,6 +3,7 @@
 
 "use client";
 import Icon from '@mdi/react';
+import Image from 'next/image';
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole, mdiMusicRestQuarter, mdiMusicRestEighth, mdiMusicRestSixteenth, mdiMusicNoteHalfDotted, mdiMusicNoteQuarterDotted } from '@mdi/js';
@@ -49,6 +50,8 @@ export default function noteIdentification() {
     if(icon != null) {
       setIcon(icon);
     } else {
+      console.log('image')
+      console.log(image)
       setImg(image);
     }
     setAnswer(answer);
@@ -157,11 +160,12 @@ export default function noteIdentification() {
         }
         {img &&
           <div className="flex items-center justify-center relative w-48 h-24">
-            {img /* && <Image 
-              // alt="Exercise Image" 
-              // src={img} 
-              // className="object-contain"
-            /> */}
+            <Image 
+              alt="Exercise Image" 
+              src={img} 
+              fill
+              className="object-contain"
+            />
           </div>
         }
         {/* {!icon &&
