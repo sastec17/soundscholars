@@ -140,7 +140,7 @@ export default function noteIdentification() {
       <p className="w-1/2 text-center">{exerciseDescription}</p>
       <div className='parent flex-parent'>
         {timeSignature && 
-          timeSignature
+          <p className='flex flex-col justify-center font-bold text-xl'>{timeSignature}</p>
         }
         {icon && 
           <div className="flex items-center justify-center relative w-48 h-24">
