@@ -65,10 +65,11 @@ def getExercises(exerciseType, username):
     if exercise_index >= len(exercises):
         return {}
     # todo: will this return a proportion?
-    exercise_progress = user[exerciseType] if user[exerciseType] < THRESHOLD else THRESHOLD
+    exercise_progress = min(exercise_index, THRESHOLD)
+    exercise_threshold = min(len(exercises), THRESHOLD)
     return {'exercise': exercises[exercise_index],
             'exerciseProgress': exercise_progress,
-            'threshold': THRESHOLD}
+            'threshold': exercise_threshold}
 
 @backend.app.route("/api/getLearningPages", methods=['POST'])
 def getLearningPages():
@@ -107,13 +108,13 @@ def correctResponse():
     user = getUserFromDB(username)
     level = user['level']
 
-    updateLevel = level < 2    
+    update_level = level < 2    
     for type in EXERCISE_TYPES:
         numExercisesInLevel = len(getExercisesFromDB(type, level))
         if user[type] < min(numExercisesInLevel, THRESHOLD):
-            updateLevel = False
+            update_level = False
     
-    if updateLevel:
+    if update_level:
         # update user's level and counters
         connection.execute(
             "UPDATE users "
@@ -129,9 +130,10 @@ def correctResponse():
 
     # handle logic for when user gives correct response
     exercises = getExercisesFromDB(exerciseType, level)
-    exercise_index = user[exerciseType] % len(exercises)
-    exercise_progress = user[exerciseType] if user[exerciseType] < THRESHOLD else THRESHOLD
-    return {'inreaseLevel':False,
-            'nextExercise': exercises[exercise_index],
+    exercise_index = user[exerciseType]
+    exercise_progress = min(exercise_index, THRESHOLD)
+    next_exercise = exercises[exercise_index] if exercise_index < len(exercises) else {}
+    return {'inreaseLevel': False,
+            'nextExercise': next_exercise,
             'exerciseProgress': exercise_progress
             }

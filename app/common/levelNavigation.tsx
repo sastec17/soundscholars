@@ -4,6 +4,7 @@ type nextExercise = {
     exercisePath: string;
     answer: string;
     textDescription: string;
+    timeSignature: string;
 }
 
 type correctAnserReturn = {
@@ -33,18 +34,24 @@ export default async function correctAnswer(
     }
 
     const data = await response.json();
+    console.log(data);
 
     if (data.increaseLevel) {
         Cookies.set('level', data.nextLevel);
         // navigate to next page
         window.location.href = '/learningPages/levels/level' + data.nextLevel + '0';
         throw new Error("Navigation occurred, no return value possible."); // Prevent further execution
+    } else if (JSON.stringify(data.nextExercise) === "{}") {
+        // no more exercises of this type, navigate back to main exercise page
+        window.location.href = '/exercises';
+        throw new Error("Navigation occurred, no return value possible."); // Prevent further execution
     }
     return {
         exercise:{
             exercisePath: data.nextExercise.exercisePath,
             answer: data.nextExercise.answer,
-            textDescription: data.nextExercise.textDescription
+            textDescription: data.nextExercise.textDescription,
+            timeSignature: data.nextExercise.timeSignature
         },
         exerciseProgress: data.exerciseProgress
     };

@@ -42,7 +42,6 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           return response.json();
         })
         .then((data) => {
-          console.log(data)
           if(JSON.stringify(data) === "{}") {
             window.location.href = '/exercises';
           }

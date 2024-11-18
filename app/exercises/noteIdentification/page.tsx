@@ -37,7 +37,7 @@ export default function noteIdentification() {
   const [progress, setProgress] = useState(0);
   const [threshold, setThreshold] = useState(0);
 
-  function setNewQuestion(symbolName: string, answer: string, level: number) {
+  function setNewQuestion(symbolName: string, answer: string, level: number, timeSignature: string) {
     const format = Math.floor(Math.random() * 2);
     const img = noteIdentificationMap.get(String(symbolName));
     if(img != null) {
@@ -51,10 +51,11 @@ export default function noteIdentification() {
     if(format == 0) { 
       setExerciseDescription("Given a note/rest identify the name of that note."); 
       setPrompt("Symbol Name: ")
+      setTimeSignature("");
       setFormat(0);
     } else { 
       setExerciseDescription("Given a note/rest and time signature, identify the length (how many beats it would occupy) of that note."); 
-      setTimeSignature("4/4");
+      setTimeSignature(timeSignature);
       setPrompt("# Beats:");
       setFormat(1);
     }
@@ -79,30 +80,25 @@ export default function noteIdentification() {
           window.location.href = '/exercises';
         }
         if (!ignoreStaleRequest) {
-          setNewQuestion(data.exercise.textDescription, data.exercise.answer, data.exercise.level);
+          setNewQuestion(data.exercise.textDescription, data.exercise.answer, data.exercise.level, data.exercise.timeSignature);
           setProgress(data.exerciseProgress);
           setThreshold(data.threshold);
         }
       })
       .catch((error) => console.log(error));
       return () => {
-        // This is a cleanup function that runs whenever the component
-        // unmounts or re-renders. If a Post is about to unmount or re-render, we
-        // should avoid updating state.
         ignoreStaleRequest = true;
       };
   }, [])
 
   async function handleSubmit() {
-    console.log(format);
     let correct = format == 0 ? symbolName : answer;
     if(response == correct) { // note name
       console.log(response, symbolName)
-      console.log("correct!")
       setaiFeedback("");
       let data = await correctAnswer(exerciseType);
       // only set modified vars
-      setNewQuestion(data.exercise.textDescription, data.exercise.answer, level);
+      setNewQuestion(data.exercise.textDescription, data.exercise.answer, level, data.exercise.timeSignature);
       setProgress(data.exerciseProgress);
     } else {
       let ignoreStaleRequest = false;

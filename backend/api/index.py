@@ -25,7 +25,6 @@ def noteIdentification():
 def typeThatRhythm():
     data = request.get_json()
     username = data['username']
-    # TODO: CHANGE TO COMPLETE TYPERHYTHM WHEN ADDED TO DB
     return getExercises('typeRhythm', username)
 
 @backend.app.route("/api/getFeedback", methods=['POST'])

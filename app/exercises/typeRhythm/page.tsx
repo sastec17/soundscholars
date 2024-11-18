@@ -34,6 +34,9 @@ export default function TypeRhythm() {
         return response.json();
       })
       .then((data) => {
+        if(JSON.stringify(data) === "{}") {
+          window.location.href = '/exercises';
+        }
         // If ignoreStaleRequest was set to true, we want to ignore the results of the
         // the request. Otherwise, update the state to trigger a new render.
         if (!ignoreStaleRequest) {
@@ -60,6 +63,7 @@ export default function TypeRhythm() {
       console.log('correct!')
       setaiFeedback("");
       let data = await correctAnswer(exerciseType);
+
       // only update modified fields
       setImgUrl(data.exercise.exercisePath);
       setAnswer(data.exercise.answer);
@@ -89,7 +93,7 @@ export default function TypeRhythm() {
           return response.json();
         }).then((data) => {
           if (!ignoreStaleRequest) {
-            setaiFeedback(data.exercise.feedback);
+            setaiFeedback(data.feedback);
           }
         })
         .catch((error) => console.log(error));
