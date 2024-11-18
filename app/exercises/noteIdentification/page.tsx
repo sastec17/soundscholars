@@ -16,8 +16,8 @@ const noteIdentificationMap = new Map<string, string>([
   ["half rest", mdiMusicRestHalf],
   ["whole note", mdiMusicNoteWhole],
   ["whole rest", mdiMusicRestWhole],
-  ["eigth note", mdiMusicNoteEighth],
-  ["eigth rest", mdiMusicRestEighth],
+  ["eighth note", mdiMusicNoteEighth],
+  ["eighth rest", mdiMusicRestEighth],
   ["dotted half note", mdiMusicNoteHalfDotted],
   ["dotted quarter note", mdiMusicNoteQuarterDotted]
   // ["sixteenth note", mdiMusicNoteSixteenth],

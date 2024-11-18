@@ -82,14 +82,14 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
         var answerOptions = ["half note", "quarter note"];
         if(exerciseType == 'noteAddition'){  
           answerOptions.push("whole note");
-          if(level > 0) { answerOptions.push('eigth note'); }
+          if(level > 0) { answerOptions.push('eighth note'); }
           if(level > 1) { 
             answerOptions.push('dotted half note'); 
             answerOptions.push('dotted quarter note');
           }
         }
         if(exerciseType == 'completeMeasure' && level > 0) { 
-          answerOptions.push("eigth note"); 
+          answerOptions.push("eighth note"); 
           // if(level > 1) { answerOptions.push('sixteenth note'); }
         }
         console.log(answerOptions);
@@ -185,7 +185,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                 {level > 0 && <button className="relative w-24 h-24 rounded-full outline outline-2 outline-black hover:outline-indigo-500"
                   onClick={() => checkAnswer('eighth')}>
                   <Icon path={mdiMusicNoteEighth}
-                    title="Eigth note"
+                    title="Eighth note"
                     size={3}
                     color="black"
                   />
