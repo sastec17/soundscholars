@@ -3,7 +3,7 @@ from flask import request
 import backend
 import backend.model
 
-THRESHOLD=3
+THRESHOLD=4
 EXERCISE_TYPES = ['completeMeasure','noteAddition', 'noteIdentification', 'typeRhythm']
 
 def getUserFromDB(username):
