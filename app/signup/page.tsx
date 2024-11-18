@@ -83,7 +83,7 @@ export default function SignUp() {
                     <div className='flex flex-col items-center space-y-2'>
                         <button 
                             type='submit'
-                            className="py-3 px-4 bg-gray-100 rounded-md"
+                            className="py-3 px-4 bg-gray-100 rounded-md hover:bg-gray-300"
                             >
                             Sign Up
                         </button>
