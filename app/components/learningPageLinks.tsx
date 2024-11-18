@@ -47,18 +47,18 @@ export default function LearningPageLinks() {
         <div>
             <div className='flex flex-col space-y-10 pt-10'>
             {learningPages.map((pages, level) => (
-                <div>
+                <div key={"level"+level.toString()}>
                     <p>Level {level.toString()}</p>
-                <div key={level} className="flex items-center space-x-10 items-stretch">
-                    
-                    {pages.map((item, i) => (
-                        <div key={i} className={'flex-1 py-4 px-3 bg-indigo-300 rounded-md text-center hover:bg-indigo-500'}>
-                            <Link href={getLink(level.toString(), item)}>
-                            {item}
-                            </Link>
+                    <div className="flex items-center space-x-10 items-stretch">
+                        
+                        {pages.map((item, i) => (
+                            <div key={"page"+i} className={'flex-1 py-4 px-3 bg-indigo-300 rounded-md text-center hover:bg-indigo-500'}>
+                                <Link href={getLink(level.toString(), i.toString())}>
+                                {item}
+                                </Link>
+                        </div>
+                        ))}
                     </div>
-                    ))}
-                </div>
                 </div>
             ))}
             </div>
