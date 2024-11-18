@@ -30,17 +30,22 @@ case $1 in
     fi
     mkdir -p public/uploads/level0
     mkdir -p public/uploads/level1
+    mkdir -p public/uploads/level2
+
     sqlite3 var/soundScholars.sqlite3 < sql/schema.sql
     sqlite3 var/soundScholars.sqlite3 < sql/data.sql
     cp sql/uploads/level0/* public/uploads/level0
     cp sql/uploads/level1/* public/uploads/level1
-    
+    cp sql/uploads/level2/* public/uploads/level2
+
     echo "+ mkdir -p public/uploads/level0"
     echo "+ mkdir -p public/uploads/level1"
+    echo "+ mkdir -p public/uploads/level2"
     echo "+ sqlite3 var/soundScholars.sqlite3 < sql/schema.sql"
     echo "+ sqlite3 var/soundScholars.sqlite3 < sql/data.sql"
     echo "+ cp sql/uploads/level0/* public/uploads/level0/*"
     echo "+ cp sql/uploads/level1/* public/uploads/level1/*"
+    echo "+ cp sql/uploads/level2/* public/uploads/level2/*"
     ;;
 
   "destroy")
