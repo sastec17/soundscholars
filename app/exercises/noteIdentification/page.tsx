@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicRestHalf, mdiMusicNoteWhole, mdiMusicRestWhole, mdiMusicRestQuarter, mdiMusicRestEighth, mdiMusicRestSixteenth } from '@mdi/js';
 import correctAnswer from '@/app/common/levelNavigation';
+import ProgressBar from '@/app/components/progressBar';
 
 const noteIdentificationMap = new Map<string, string>([
   ["quarter note", mdiMusicNoteQuarter],
@@ -33,7 +34,8 @@ export default function noteIdentification() {
   const [timeSignature, setTimeSignature] = useState("")
   const [prompt, setPrompt] = useState("");
   const [format, setFormat] = useState(-1);
-  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [threshold, setThreshold] = useState(0);
 
   function setNewQuestion(symbolName: string, answer: string, level: number) {
     const format = Math.floor(Math.random() * 2);
@@ -77,7 +79,9 @@ export default function noteIdentification() {
           window.location.href = '/exercises';
         }
         if (!ignoreStaleRequest) {
-          setNewQuestion(data.textDescription, data.answer, data.level);
+          setNewQuestion(data.exercise.textDescription, data.exercise.answer, data.exercise.level);
+          setProgress(data.exerciseProgress);
+          setThreshold(data.threshold);
         }
       })
       .catch((error) => console.log(error));
@@ -96,10 +100,10 @@ export default function noteIdentification() {
       console.log(response, symbolName)
       console.log("correct!")
       setaiFeedback("");
-      setLoading(true);
       let data = await correctAnswer(exerciseType);
       // only set modified vars
-      setNewQuestion(data.textDescription, data.answer, level);
+      setNewQuestion(data.exercise.textDescription, data.exercise.answer, level);
+      setProgress(data.exerciseProgress);
     } else {
       let ignoreStaleRequest = false;
       let body = {
@@ -152,11 +156,6 @@ export default function noteIdentification() {
             <p>Loading image...</p>
           </div>
         }
-        {/* {loading && 
-          <div className="flex items-center justify-center text-center">
-            <p>Great work! Loading next exercise...</p>
-          </div>
-        } */}
       </div>
       {aiFeedback &&
         <div className="text-center w-2/3">
@@ -174,6 +173,7 @@ export default function noteIdentification() {
         </div>
         <button onClick={() => handleSubmit()} className="bg-indigo-300 hover:bg-indigo-500 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"> Submit </button>
       </form>
+      <ProgressBar progress={progress} threshold={threshold} />
     </main>
   )
 }

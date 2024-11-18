@@ -6,7 +6,8 @@ import Image from "next/image"
 import { useEffect, useState } from "react";
 import Icon from '@mdi/react';
 import { mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteEighth, mdiMusicNoteSixteenth, mdiMusicNoteWhole } from '@mdi/js';
-import correctAnswer from "../common/levelNavigation";
+import correctAnswer from '@/app/common/levelNavigation';
+import ProgressBar from '@/app/components/progressBar';
 import Cookies from "js-cookie";
 
 type MultipleChoiceProps = {url:string};
@@ -20,9 +21,10 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
     const [answer, setAnswer] = useState("");
     const [level, setLevel] = useState(0);
     const [aiFeedback, setaiFeedback] = useState("");
-    const [exerciseDescription, setDescription] = useState("");
     const [exerciseType, setExerciseType] = useState("");
     const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [threshold, setThreshold] = useState(0);
     useEffect(() => {
       // Declare a boolean flag that we can use to cancel the API request.
       let ignoreStaleRequest = false;
@@ -48,11 +50,12 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
           // the request. Otherwise, update the state to trigger a new render.
           if (!ignoreStaleRequest) {
             console.log("setting exercise")
-            setImgUrl(data.exercisePath);
-            setAnswer(data.answer);
-            setLevel(data.level);
-            setDescription(data.textDescription);
-            setExerciseType(data.exerciseType);
+            setImgUrl(data.exercise.exercisePath);
+            setAnswer(data.exercise.answer);
+            setLevel(data.exercise.level);
+            setExerciseType(data.exercise.exerciseType);
+            setProgress(data.exerciseProgress);
+            setThreshold(data.threshold);
           }
         })
         .catch((error) => console.log(error));
@@ -68,9 +71,9 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
         setLoading(true);
         let data = await correctAnswer(exerciseType);
         // only update modified fields
-        setImgUrl(data.exercisePath);
-        setAnswer(data.answer);
-        setDescription(data.textDescription);
+        setImgUrl(data.exercise.exercisePath);
+        setAnswer(data.exercise.answer);
+        setProgress(data.exerciseProgress);
         setLoading(false);
       }
       // if incorrect, call BE to get error message
@@ -194,6 +197,7 @@ export default function MultipleChoice({ url }: MultipleChoiceProps) {
                     />
                 </button> }
             </div>
+            <ProgressBar progress={progress} threshold={threshold} />
         </div>
     )
 }
