@@ -1,9 +1,14 @@
 import Cookies from "js-cookie";
 
-type correctAnserReturn = {
+type nextExercise = {
     exercisePath: string;
     answer: string;
     textDescription: string;
+}
+
+type correctAnserReturn = {
+    exercise: nextExercise;
+    exerciseProgress: number;
 };
 
 export default async function correctAnswer(
@@ -36,8 +41,11 @@ export default async function correctAnswer(
         throw new Error("Navigation occurred, no return value possible."); // Prevent further execution
     }
     return {
-        exercisePath: data.nextExercise.exercisePath,
-        answer: data.nextExercise.answer,
-        textDescription: data.nextExercise.textDescription,
+        exercise:{
+            exercisePath: data.nextExercise.exercisePath,
+            answer: data.nextExercise.answer,
+            textDescription: data.nextExercise.textDescription
+        },
+        exerciseProgress: data.exerciseProgress
     };
 }

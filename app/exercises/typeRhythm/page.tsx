@@ -4,7 +4,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image"
 import Cookies from "js-cookie";
-import correctAnswer from "../../common/levelNavigation";
+import correctAnswer from '@/app/common/levelNavigation';
+import ProgressBar from '@/app/components/progressBar';
 
 export default function TypeRhythm() {
   const [rhythm, setRhythm] = useState("");
@@ -14,6 +15,8 @@ export default function TypeRhythm() {
   const [aiFeedback, setaiFeedback] = useState("");
   const [exerciseDescription, setDescription] = useState("");
   const [exerciseType, setExerciseType] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [threshold, setThreshold] = useState(0);
 
   useEffect(() => {
     let ignoreStaleRequest = false;
@@ -34,11 +37,13 @@ export default function TypeRhythm() {
         // If ignoreStaleRequest was set to true, we want to ignore the results of the
         // the request. Otherwise, update the state to trigger a new render.
         if (!ignoreStaleRequest) {
-          setImgUrl(data.exercisePath);
-          setAnswer(data.answer);
-          setLevel(data.level);
-          setDescription(data.textDescription);
-          setExerciseType(data.exerciseType);
+          setImgUrl(data.exercise.exercisePath);
+          setAnswer(data.exercise.answer);
+          setLevel(data.exercise.level);
+          setDescription(data.exercise.textDescription);
+          setExerciseType(data.exercise.exerciseType);
+          setProgress(data.exerciseProgress);
+          setThreshold(data.threshold);
         }
       })
       .catch((error) => console.log(error));
@@ -56,9 +61,10 @@ export default function TypeRhythm() {
       setaiFeedback("");
       let data = await correctAnswer(exerciseType);
       // only update modified fields
-      setImgUrl(data.exercisePath);
-      setAnswer(data.answer);
-      setDescription(data.textDescription);
+      setImgUrl(data.exercise.exercisePath);
+      setAnswer(data.exercise.answer);
+      setDescription(data.exercise.textDescription);
+      setProgress(data.exerciseProgress);
     }
     else {
       let ignoreStaleRequest = false;
@@ -83,7 +89,7 @@ export default function TypeRhythm() {
           return response.json();
         }).then((data) => {
           if (!ignoreStaleRequest) {
-            setaiFeedback(data.feedback);
+            setaiFeedback(data.exercise.feedback);
           }
         })
         .catch((error) => console.log(error));
@@ -96,9 +102,11 @@ export default function TypeRhythm() {
   return (
     <main className="flex min-h-screen flex-col items-center pt-24">
         <h1 className="text-3xl font-semibold mb-5">Type that Rhythm</h1>
-        <p className="w-1/2 text-center">Given the following measure, type the corresponding rhythm.
-        See recommended notation below.
-        </p>
+        <p className="w-1/2 text-center">Given the following measure, type the corresponding rhythm.</p>
+        <p className="w-1/2 text-center">Please only write beats where an articulation occurs, or when a new pitch is "started."</p>
+        {level > 0 &&
+              <p className="w-1/2 text-center mt-5"><b>Notation Tip: </b>Denote eighth note divisions with "+"s. (i.e. two eighth notes = '1+')</p>
+        }
         <div>
             {imgUrl && 
               <div className="flex items-center justify-center relative w-48 h-24">
@@ -137,6 +145,7 @@ export default function TypeRhythm() {
             Submit
           </button>
         </form>
+        <ProgressBar progress={progress} threshold={threshold} />
     </main>
   )
 }

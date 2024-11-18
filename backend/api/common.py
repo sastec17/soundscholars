@@ -62,10 +62,13 @@ def getExercises(exerciseType, username):
     exercises = getExercisesFromDB(exerciseType, level)    
 
     exercise_index = user[exerciseType]
-    if exercise_index > len(exercises):
+    if exercise_index >= len(exercises):
         return {}
-    
-    return exercises[exercise_index]
+    # todo: will this return a proportion?
+    exercise_progress = user[exerciseType] if user[exerciseType] < THRESHOLD else THRESHOLD
+    return {'exercise': exercises[exercise_index],
+            'exerciseProgress': exercise_progress,
+            'threshold': THRESHOLD}
 
 @backend.app.route("/api/getLearningPages", methods=['POST'])
 def getLearningPages():
@@ -127,6 +130,8 @@ def correctResponse():
     # handle logic for when user gives correct response
     exercises = getExercisesFromDB(exerciseType, level)
     exercise_index = user[exerciseType] % len(exercises)
+    exercise_progress = user[exerciseType] if user[exerciseType] < THRESHOLD else THRESHOLD
     return {'inreaseLevel':False,
-            'nextExercise': exercises[exercise_index]
+            'nextExercise': exercises[exercise_index],
+            'exerciseProgress': exercise_progress
             }
