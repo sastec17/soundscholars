@@ -11,7 +11,7 @@ export default function Welcome() {
             <p>We will introduce new concepts via learning pages after you complete a level.</p>
           </div>
           <div className='flex justify-center m-5 space-x-6'>
-            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg'
+            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg hover:bg-indigo-500'
               href='/learningPages/levels/level00'>Get Started</Link>
           </div>
         </div>

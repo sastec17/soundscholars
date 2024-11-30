@@ -22,9 +22,9 @@ export default function Home() {
           </div>
           */}
           <div className='flex justify-center m-5 space-x-6'>
-            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg'
+            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg hover:bg-indigo-500'
                 href='/login'>Login</Link>
-            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg'
+            <Link className='p-5 bg-indigo-300 font-semibold rounded-lg hover:bg-indigo-500'
               href='/signup'>Sign Up</Link>
           </div>
         </div>

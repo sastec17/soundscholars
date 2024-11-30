@@ -84,7 +84,7 @@ VALUES
 
     ('typeRhythm', '/uploads/level2/tr_dqeh.png', 'quarter, quarter, quarter', 2, '4/4', 'dotted quarter, eighth, half', '1+3'),
     ('typeRhythm', '/uploads/level2/tr_eeqqee.png', 'eighth, eighth, quarter tied to quarter, eighth, eighth', 2, '4/4', 'quarter, eighth', '1+24+'),
-    ('typeRhythm', '/uploads/level2/tr_qdh.png', 'quarter tied to dotted half', 2, '4/4', 'quarter, dotted half', '12'),
+    ('typeRhythm', '/uploads/level2/tr_qdh.png', 'quarter tied to dotted half', 2, '4/4', 'quarter, dotted half', '1'),
     ('typeRhythm', '/uploads/level2/tr_qeeq.png', 'quarter, eighth, eighth, quarter', 2, '3/4', 'quarter, eighth', '12+3'),    
     ('typeRhythm', '/uploads/level2/tr_qqh.png', 'quarter tied to quarter, half', 2, '4/4', 'quarter, half, tied notes', '13'),    
     ('typeRhythm', '/uploads/level2/tr_qqq.png', 'quarter, quarter tied to quarter', 2, '3/4', 'quarter, tied notes', '12');
